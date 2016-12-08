@@ -1,0 +1,3 @@
+1. what happens if vehicle1 has message \phi (e.g. "temp >5C") and receives message \neg \phi (e.g. "temp >5C")? how is the contradiction resolved? always accepting the newest?
+
+2. 
