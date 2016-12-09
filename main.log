@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.31)  9 DEC 2016 14:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.31)  9 DEC 2016 15:37
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -395,13 +395,16 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 \myCenter3=\dimen162
 \myScoreEnd3=\dimen163
  [3]
-LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 453.
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [4]
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 453.
+
 Overfull \hbox (14.45784pt too wide) detected at line 504
 []
  []
 
-[5] (./main.bbl)
+(./main.bbl [5])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -447,7 +450,7 @@ crr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 251021 bytes).
+Output written on main.pdf (6 pages, 251302 bytes).
 PDF statistics:
  120 PDF objects out of 1000 (max. 8388607)
  87 compressed objects within 1 object stream
