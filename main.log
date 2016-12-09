@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.4.29)  8 DEC 2016 14:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.31)  9 DEC 2016 11:43
 entering extended mode
- restricted \write18 enabled.
+ \write18 enabled.
  %&-line parsing enabled.
 **main.tex
 (./main.tex
 LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+Babel <3.9q> and hyphenation patterns for 5 language(s) loaded.
 (./IEEEtran.cls
 Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
 -- See the "IEEEtran_HOWTO" manual for usage information.
@@ -19,7 +19,7 @@ Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
 \@IEEEtrantmptoksA=\toks14
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 503.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+(/usr/share/texmf/tex/latex/psnfss/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 -- Using IEEE Computer Society mode.
@@ -261,6 +261,7 @@ Proof Tree (bussproofs) style macros. Version 1.1.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 \c@definition=\count109
+\c@theorem=\count110
 
 
 LaTeX Warning: Unused global option(s):
@@ -285,16 +286,16 @@ LaTeX Font Info:    ... okay on input line 17.
 -- Lines per column: 58 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count110
+\scratchcounter=\count111
 \scratchdimen=\dimen153
 \scratchbox=\box36
-\nofMPsegments=\count111
-\nofMParguments=\count112
+\nofMPsegments=\count112
+\nofMParguments=\count113
 \everyMPshowfont=\toks28
-\MPscratchCnt=\count113
+\MPscratchCnt=\count114
 \MPscratchDim=\dimen154
-\MPnumerator=\count114
-\makeMPintoPDFobject=\count115
+\MPnumerator=\count115
+\makeMPintoPDFobject=\count116
 \everyMPtoPDFconversion=\toks29
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -346,53 +347,35 @@ e
 ))
 LaTeX Font Info:    Try loading font information for OT1+phv on input line 27.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
+(/usr/share/texmf/tex/latex/psnfss/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.05249> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 27.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 38.
 
-
-LaTeX Warning: Citation `xxx' on page 1 undefined on input line 36.
-
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 36.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+(/usr/share/texmf/tex/latex/psnfss/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-
-LaTeX Warning: Citation `primiero_secureND' on page 1 undefined on input line 3
-6.
-
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <12.045> not available
-(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 42.
-LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 44
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 44.
+LaTeX Font Info:    Calculating math sizes for size <10.03749> on input line 46
 .
-LaTeX Font Info:    Try loading font information for U+msa on input line 44.
+LaTeX Font Info:    Try loading font information for U+msa on input line 46.
+
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 44.
+LaTeX Font Info:    Try loading font information for U+msb on input line 46.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-
-LaTeX Warning: Citation `primiero_secureND' on page 1 undefined on input line 4
-4.
-
-
-LaTeX Warning: Citation `DBLP:conf/ifiptm/Primiero16' on page 1 undefined on in
-put line 44.
-
-
-Overfull \hbox (29.70438pt too wide) detected at line 64
+Overfull \hbox (29.70438pt too wide) detected at line 66
 []
  []
 
-
-Underfull \vbox (badness 1648) has occurred while \output is active []
-
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
@@ -408,44 +391,217 @@ Underfull \vbox (badness 1648) has occurred while \output is active []
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[2]
 \myBox3=\box39
 \myScoreStart3=\dimen161
 \myCenter3=\dimen162
 \myScoreEnd3=\dimen163
 
-LaTeX Warning: Citation `xxx' on page 2 undefined on input line 380.
 
-LaTeX Font Info:    Calculating math sizes for size <5.01874> on input line 399
-.
+LaTeX Warning: Citation `xxx' on page 3 undefined on input line 436.
 
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <2.50937> not available
-(Font)              size <5> substituted on input line 399.
+[3]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 455.
+ [4]
+! Argument of \@array has an extra }.
+<inserted text> 
+                \par 
+l.498 \begin{array}}
+                    {l}
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+! Paragraph ended before \@array was complete.
+<to be read again> 
+                   \par 
+l.498 \begin{array}}
+                    {l}
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+! Extra }, or forgotten \endgroup.
+<recently read> }
+                 
+l.498 \begin{array}}
+                    {l}
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.500 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.500 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \@@par 
+l.500 
+      
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+! Extra }, or forgotten \endgroup.
+\par ...m \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.500 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.502 AP^
+         {v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})=\\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Misplaced \cr.
+\reserved@c ->\ifnum 0=`{\fi }${}\cr 
+                                     
+l.503 \sum
+          _{FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k})}\\
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \cr.
+\reserved@c ->\ifnum 0=`{\fi }${}\cr 
+                                     
+l.504 (
+       1-\mathtt{r}(C_{k})(\mathtt{s}(\psi^{v_{j}}_{i,k} \in FS^{v_{i}}(\phi...
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.505 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.505 
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra }, or forgotten \endgroup.
+\par ...m \@noitemerr {\@@par }\fi \else {\@@par }
+                                                  \fi 
+l.505 
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
 
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <2.50937> not available
-(Font)              size <5> substituted on input line 399.
+! LaTeX Error: Bad math environment delimiter.
 
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.506 \end{displaymath}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <2.50937> not available
-(Font)              size <5> substituted on input line 399.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.506 \end{displaymath}
+                       
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
+! Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.506 \end{displaymath}
+                       
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
 
-LaTeX Font Warning: Font shape `OT1/cmr/m/it' in size <2.50937> not available
-(Font)              size <5> substituted on input line 399.
+! Misplaced \crcr.
+\endarray ->\crcr 
+                  \egroup \egroup 
+l.507 \end{array}
+                 
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
+! Extra }, or forgotten \endgroup.
+\endarray ->\crcr \egroup 
+                          \egroup 
+l.507 \end{array}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-LaTeX Font Warning: Font shape `OT1/cmtt/m/n' in size <2.50937> not available
-(Font)              size <5> substituted on input line 399.
+! Extra }, or forgotten \endgroup.
+\endarray ->\crcr \egroup \egroup 
+                                  
+l.507 \end{array}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-[2]
-Overfull \hbox (47.61505pt too wide) detected at line 448
-\OML/cmm/m/it/10 AP[]\OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10 M[]\OT1/cmr/m/n/10 ) = [
-](1 \OMS/cmsy/m/n/10 ^^@ \OT1/cmtt/m/n/10 r\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 k\
-OT1/cmr/m/n/10 )(\OT1/cmtt/m/n/10 s\OT1/cmr/m/n/10 (\OML/cmm/m/it/10  [] \OMS/c
-msy/m/n/10 2 \OML/cmm/m/it/10 FS[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^^[] [] ^^
-^[]\OT1/cmr/m/n/10 ))))
- []
-
+(./main.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -457,45 +613,46 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[3] [4] (./main.aux)
-
-LaTeX Font Warning: Size substitutions with differences
-(Font)              up to 2.49063pt have occurred.
-
+[5] (./main.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 3665 strings out of 493029
- 54128 string characters out of 6136234
- 145293 words of memory out of 5000000
- 7145 multiletter control sequences out of 15000+600000
- 43649 words of font info for 94 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 38i,8n,26p,1150b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 3715 strings out of 494910
+ 54705 string characters out of 6179836
+ 138677 words of memory out of 5000000
+ 6939 multiletter control sequences out of 15000+600000
+ 48276 words of font info for 108 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
+ 38i,8n,26p,1360b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
-utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (4 pages, 201909 bytes).
+type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/uc
+rb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/t
+imes/utmri8a.pfb>
+Output written on main.pdf (5 pages, 246789 bytes).
 PDF statistics:
- 94 PDF objects out of 1000 (max. 8388607)
- 68 compressed objects within 1 object stream
+ 117 PDF objects out of 1000 (max. 8388607)
+ 85 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

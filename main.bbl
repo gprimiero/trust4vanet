@@ -1,0 +1,70 @@
+\begin{thebibliography}{10}
+
+\bibitem{GomezMarmol:2012:TTR:2160992.2161100}
+F{\'e}lix {G{\'o}mez M{\'a}rmol} and Gregorio {Mart{\'i}nez P{\'e}rez}.
+\newblock {TRIP, a Trust and Reputation Infrastructure-based Proposal for
+  Vehicular Ad Hoc Networks}.
+\newblock {\em J. Netw. Comput. Appl.}, 35(3):934--941, May 2012.
+
+\bibitem{Lo2009}
+Nai-Wei Lo and Hsiao-Chien Tsai.
+\newblock {A Reputation System for Traffic Safety Event on Vehicular Ad Hoc
+  Networks}.
+\newblock {\em EURASIP Journal on Wireless Communications and Networking},
+  2009(1):125348, 2009.
+
+\bibitem{5641621}
+U.~F. Minhas, J.~Zhang, T.~Tran, and R.~Cohen.
+\newblock {A Multifaceted Approach to Modeling Agent Trust for Effective
+  Communication in the Application of Mobile Ad Hoc Vehicular Networks}.
+\newblock {\em IEEE Transactions on Systems, Man, and Cybernetics, Part C
+  (Applications and Reviews)}, 41(3):407--420, May 2011.
+
+\bibitem{DBLP:conf/ifiptm/Primiero16}
+Giuseppe Primiero.
+\newblock {A Calculus for Distrust and Mistrust}.
+\newblock In Sheikh~Mahbub Habib, Julita Vassileva, Sjouke Mauw, and Max
+  M{\"u}hlh{\"a}user, editors, {\em {Trust Management {X} - 10th {IFIP} {WG}
+  11.11 International Conference, {IFIPTM} 2016, Darmstadt, Germany, July
+  18-22, 2016, Proceedings}}, volume 473 of {\em {{IFIP} Advances in
+  Information and Communication Technology}}, pages 183--190. Springer, 2016.
+
+\bibitem{primiero_secureND}
+Giuseppe Primiero and Franco Raimondi.
+\newblock {A typed natural deduction calculus to reason about secure trust}.
+\newblock In Ali Miri, Urs Hengartner, Nen{-}Fu Huang, Audun J{\o}sang, and
+  Joaqu{\'i}n Garc{\'i}a{-}Alfaro, editors, {\em {2014 Twelfth Annual
+  International Conference on Privacy, Security and Trust, Toronto, ON, Canada,
+  July 23-24, 2014}}, pages 379--382. {IEEE}, 2014.
+
+\bibitem{conf/infocom/RayaPGH08}
+Maxim Raya, Panagiotis Papadimitratos, Virgil~D. Gligor, and Jean-Pierre
+  Hubaux.
+\newblock {On Data-Centric Trust Establishment in Ephemeral Ad Hoc Networks.}
+\newblock In {\em {INFOCOM}}, pages 1238--1246. IEEE, 2008.
+
+\bibitem{restall}
+Greg Restall.
+\newblock {\em {An Introduction to Substructural Logics}}.
+
+\bibitem{Soleymani2015}
+Seyed~Ahmad Soleymani, Abdul~Hanan Abdullah, Wan~Haslina Hassan,
+  Mohammad~Hossein Anisi, Shidrokh Goudarzi, Mir~Ali {Rezazadeh Baee}, and
+  Satria Mandala.
+\newblock {Trust management in vehicular ad hoc network: a systematic review}.
+\newblock {\em EURASIP Journal on Wireless Communications and Networking},
+  2015(1):146, 2015.
+
+\bibitem{glenford}
+R~Vanni, L.M.S. Jaimes, G.~Mapp, and E.~Moreira.
+\newblock {Ontology Driven Reputation Model for VANET}.
+\newblock In {\em {AICT 2016, The Twelfth Advanced International Conference on
+  Telecommunications }}, pages 14--19. IARIA, 2016.
+
+\bibitem{Wei2012}
+Yu-Chih Wei and Yi-Ming Chen.
+\newblock {\em {Reliability and Efficiency Improvement for Trust Management
+  Model in VANETs}}, pages 105--112.
+\newblock Springer Netherlands, Dordrecht, 2012.
+
+\end{thebibliography}

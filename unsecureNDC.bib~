@@ -2812,7 +2812,7 @@ Timestamp                = {2014.02.06}
 	year = "2012"
 }
 
-@inproceedings{glenford,
+@inproceedings{ontVANET,
 	author = "Vanni, R and Jaimes, L.M.S. and Mapp, G. and Moreira, E.",
 	booktitle = "{AICT 2016, The Twelfth Advanced International Conference on Telecommunications }",
 	pages = "14-19",

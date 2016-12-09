@@ -2812,12 +2812,3 @@ Timestamp                = {2014.02.06}
 	year = "2012"
 }
 
-@inproceedings{glenford,
-	author = "Vanni, R and Jaimes, L.M.S. and Mapp, G. and Moreira, E.",
-	booktitle = "{AICT 2016, The Twelfth Advanced International Conference on Telecommunications }",
-	pages = "14-19",
-	publisher = "IARIA",
-	title = "{Ontology Driven Reputation Model for VANET}",
-	year = "2016"
-}
-

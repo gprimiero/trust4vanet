@@ -10,13 +10,13 @@
 \newtheorem{definition}{Definition}
 %\newtheorem{proposition}{Proposition}
 %\newtheorem{thesis}{Thesis}
-%\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}
 %\newtheorem{corollary}{Corollary}
 %\newtheorem{lemma}{Lemma}
 
 \begin{document}
 %opening
-\title{A formally verified Trust and Reputation Model for VANET}
+\title{A Proof-theoretic Trust and Reputation Model for VANET}
 \author{Giuseppe Primiero}
 %\institute{Department of Computer Science\\Middlesex University London\\United Kingdom}
 
@@ -27,16 +27,18 @@
 \maketitle
 
 \begin{abstract}
-Vehicle Ad Hoc Networks (VANET) are becoming an important part of intelligent transportation systems. In this context, security requirements need to rely on a combination of agents' reputation and trust relations over the messaging infrastructure in order to maintain a dynamic and safe behaviour evaluation. Ontologically grounded approaches seem to offer optimal coverage and semantic foundation but formal correctness of the model and the safety of transitive operations within the infrastructure remain unaddressed, with potentially disastrous effects. In this paper we offer a proof-theoretical interpretation of such a reputation and trust model for VANET which allows for a formal verification through translation in the Coq proof assistant and which guarantees security of transitive information transmissions.
+Vehicle Ad Hoc Networks (VANETs) are becoming an important part of intelligent transportation systems. In this context, security requirements need to rely on a combination of agents' reputation and trust relations over the messaging infrastructure in order to maintain a dynamic and safe behaviour evaluation. Ontologically grounded approaches seem to offer optimal coverage and semantic foundation but formal correctness of the model, resolution of contradictions and the safety of transitive operations within the infrastructure remain unaddressed, with potentially disastrous effects. In this paper we offer a proof-theoretical interpretation of such a reputation and trust model for VANET which allows for a formal verification through translation in the Coq proof assistant and which guarantees consistency of the messaging protocol and security of transitive transmissions.
 \end{abstract}
 
 
 \section{Introduction}\label{sec:intro}
 
-This paper provides a proof-theoretical translation of the trust and reputation model for VANET offered in \cite{xxx} in an extension of the natural deduction calculus \texttt{SecureND} \cite{primiero_secureND}. The aim is, first of all, to show that the trust properties instantiated though \texttt{SecureND} faithfully reflect those in transmission across the VANET network; accordingly, non-trustworthy interactions can be proven to be such through a proof-checking method. On a higher level, the model offered by \texttt{SecureND} has been proven formally correct through its translation to a Coq library, and as such the present translation guarantees a similar property for the whole VANET model.
+Vehicle Ad Hoc Networks (VANETs) consist of vehicles and roadside units networks created to enhance transportation systems through V2V and V2I communications. Due to their distributed and dynamic nature, such networks are open to several types of threats, including false message propagation. Trust and reputation are among the concept most used to ensure integrity, reliability  and safety of services. Several methods have been implemented, see \cite{Soleymani2015} for a recent overview. Trust models in VANETs differ especially for the main object of the model: entity-centric \cite{5641621, GomezMarmol:2012:TTR:2160992.2161100}, data-centric \cite{conf/infocom/RayaPGH08, Lo2009} and combined \cite{Wei2012}. Among the models that combine trust and reputation, \cite{glenford} offers an analysis that accounts for reputation as a characteristic of message forwarding, vehicles, drivers and other agents as well: here reputation is therefore based on a descriptive ontology of the model and is used to feedback in the system. 
+
+Unfortunately, none of the current models seem to have focused on a formal correctness requirement to ensure that derivability of messages passing protocol is checkable. Moreover, an additional problem seems to have been ignored, namely how to ensure that safety is preserved over transitive message passing operations. This paper provides a solution to both problems above. We formulate a proof-theoretic translation of the trust and reputation model for VANET offered in \cite{glenford} in an extension of the natural deduction calculus \texttt{(un)SecureND} from \cite{DBLP:conf/ifiptm/Primiero16}. The aim is, first of all, to show that the trust properties instantiated through our calculus faithfully reflect those in a VANET network; accordingly, we show how non-trustworthy interactions can be proven to be such through a proof-checking method. On a higher level, the model offered by \texttt{(un)SecureND} has been proven formally correct through its translation to a Coq library, and as such the present translation guarantees a similar property for the whole VANET model. Finally, thanks to the structural properties of our calculus, we consider a transitive messgae passign operation in the form of instances of a cut rule, whose normalization guarantees safety.
 
 
-\section{Related Work}\label{sec:related}
+%\section{Related Work}\label{sec:related}
 
 
 \section{\texttt{(un)SecureND}}\label{sec:logic}
@@ -288,7 +290,7 @@ In Figure \ref{fig:system2} we present the access rules on messages. These allow
 $\neg$-distribution expresses profile consistency: if a user profile does not allow inferring a message, then it allows inferring any other message that has no requirements including it. $\mathit{read}$ says that from any consistent profile a message can be read provided its requirements are satisfied (if any). $\mathit{trust}$ works as an elimination rule for $read$: it says that if a message is received and it preserves profile consistency, then it can be trusted. $\mathit{write}$ works as an elimination rule for $trust$: it says that a readable and trustable message can be sent over the network. $\mathit{exec}$ says that every message that is safely installed in a consistent profile holds in it. 
 
 %The Introduction rule for distrust DTrust-I expresses the principle that a message non-consistent with its receiving profile can be negated to be trustworthy; the corresponding elimination DTrust-E uses $\rightarrow$-introduction to induce $write$ of any message consistent with the conflict resolution. 
-The Introduction rule for mistrust MTrust-I says that currently held message conflicting with a newly arrived message are mistrusted; the corresponding MTrust-E allows to trust any message which is consistent with the conflict resolution by removal of the mistrusted message in the installation profile, including any required dependency, as expressed by the side condition that requires checking for any other agent. 
+The rule MTrust-I says that currently held message conflicting with a newly arrived message are mistrusted, i.e. removed from the current profile until none of its consequences are included; the corresponding MTrust-E elimination allows to trust any message consistent with the conflict resolution by removal of the mistrusted message in the user profile, including any required dependency, as expressed by the side condition that requires checking with any other agent who has higher reputation than the sender of the original message. 
 %By the latter set of rules, 
 %\textit{distrust} is a flag for preventing installation of conflicting external packages, while 
 \textit{mistrust} is a flag for facilitating removal of messages present in the user profile conflicting in view of incoming new information. 
@@ -301,6 +303,60 @@ We can now offer a more general interpretation of the derivability relation $\vd
 \begin{definition}
 	A formula $\Gamma^{v_{i}} \vdash_{\mathtt{s}}  RES$ says that a message from some user $v_{k}$ is validly accessed ($mode(\phi^{v_{k}})$) and eventually inferred ($\phi^{v_{k}}$) within a user profile with messages held by user $v_{i}$ at step $\mathtt{s}$. 
 \end{definition}
+
+
+
+\subsection{Structural Rules}
+
+Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure \ref{fig:system3}. As a result the system qualifies as substructural, see e.g. \cite{restall}. Weakening is constrained by an instance of $trust$: it says valid information is preserved under vehicle's profile extension, assuming the latter is provably consistent and therefore no refresh is required. Contraction is constrained by preservation of ordering: it says that removing identical messages from  a vehicle's profile is admissible, with the constraint that the copy from the agent with higher reputation is preserved. Exchange is doubly constrained by order: it says that reorder of messages is admissible if there is no involved dependency between them. Finally, the Cut rule expresses validity under profile extension: if a message $\phi_{i,j}$ is validly for agent $v_{i}$ and after messaging it to $v_{j}$ the latter can infer $\phi_{i,k}$, then $v_{i}$ can infer $\phi_{i,k}$ by setting a message protocol with $v_{j}$.
+
+
+\begin{figure*}[t]
+	\begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}}\vdash_{\mathtt{s}}  \phi^{v_{i}}_{i,j}$}
+		\AxiomC{$\Gamma^{v_{i}}\vdash_{\mathtt{s'}}  Trust(\phi^{v_{j}}_{j,k})$}
+		\RightLabel{Weakening}
+		\BinaryInfC{$\Gamma^{v_{i}}; \phi^{v_{j}}_{j,k}\vdash_{\mathtt{max(s,s'}+1)}  \phi^{v_{i}}_{i,j}$}
+%	\end{prooftree}
+\DisplayProof
+%	
+%		\begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}}; \phi^{v_{j}}_{j,k}; \phi^{v_{k}}_{j,k}\vdash_{\mathtt{s}}  \psi^{v_{i}}_{i,j}$}
+		\AxiomC{$v_{j} \prec v_{k}$}
+		\RightLabel{Contraction}
+		\BinaryInfC{$\Gamma^{v_{i}}; \phi^{v_{j}}_{j,k}\vdash_{\mathtt{s+1}}  \psi^{v_{i}}_{i,j}$}
+	\end{prooftree}
+
+	
+	\begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}}; \phi^{v_{i}}_{i,j}; \phi^{v_{i}}_{i,k}\vdash_{\mathtt{s}}  \psi^{v_{i}}_{i,j}$}
+		\AxiomC{$\phi^{v_{i}}_{i,j}\nless \phi^{v_{i}}_{i,k}$}
+		\RightLabel{Profile Exchange}
+		\BinaryInfC{$\Gamma^{v_{i}}; \phi^{v_{i}}_{i,k}; \phi^{v_{i}}_{i,j}\vdash_{\mathtt{s+1}}  \psi^{v_{i}}_{i,j}$}
+	\end{prooftree}
+%\DisplayProof
+
+	
+	\begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}} \vdash_{\mathtt{s}}  \phi^{v_{i}}_{i,j}$}
+		\AxiomC{$\Gamma^{v_{j}}, \phi^{v_{i}}_{i,j}\vdash_{\mathtt{s'}}   \phi^{v_{j}}_{i,k}$ }
+		\RightLabel{Cut}
+		\BinaryInfC{$\Gamma^{v_{i}}; \Gamma^{v_{j}}\vdash_{\mathtt{max(s,s')+1}}   \phi^{v_{j}}_{i,k}$}
+	\end{prooftree}
+	\caption{The System \texttt{(un)SecureND}: Structural Rules}\label{fig:system3}
+\end{figure*}
+
+The cut rule justifies the following result:
+
+\begin{theorem}[Normalization]
+Any $\mathtt{(un)SecureND}$ derivation with an occurrence $c$ of the $Cut$ rule can be transformed into another derivation with the same end sequent without $c$ using only trust.
+\end{theorem}
+
+\begin{proof}
+	By induction on the derivation $D$ which is the redex of the cut-elimination. Assuming $c$ is the only Cut rule and it is the last inference rule of the redex, the derivation $D^\prime$ which is the contractum of the cut-elimination contains a descendent of the cut obtained by an instance of Weakening under trust. Because the formula obtained by the cut is, by hypothesis, derivable from the weaker protocol, it will also be derivable from the weaker and the stronger protocol together. When $c$ is not the last inference rule of the redex, then the descendent of the cut will admit all similar Weakenings preserving the one occurring in the cut; those imports by Weakening will occur also in the contractum of the cut rule and can be traced back up to the one formulation of the import that occurs in the cut rule.
+\end{proof}
+
+Normalization justifies a safety property of our trust and reputation model over transitive transmissions: for each vehicle $v_{i}, v_{j}, v_{k}$, if $v_{k}$ holds information $\phi_{i,j}$ and this information is passed to $v_{j}$, then every valid message derived from $\phi_{i,j}$ by $v_{k}$ can be inferred by $v_{j}$ assuming the consistency (by trust) of its profile with that of $v_{k}$; similarly now, $v_{j}$ can pass $\phi_{i,j}$ to $v_{i}$, and the latter can infer from there, assuming its profile is consistent with those of $v_{j}, v_{k}$.
 
 
 
@@ -393,7 +449,7 @@ FS^{v_{j}}(\phi^{v_{i}}_{i,j})=\{ \psi^{v_{j}}_{i,k}\mid \Gamma^{v_{j}}
 By way of example, consider the following simple derivation, which induces $FS^{v_{k}}(m^{v_{i,j}}_{2,1})=\{m^{v_{k}}_{2,2}\}$: 
 
 \begin{figure*}
-\begin{tiny}
+\begin{footnotesize}
 
 	\begin{prooftree}
 		\AxiomC{$\Gamma^{v_{i}}; \Gamma^{v_{k}}:profile$}
@@ -409,7 +465,7 @@ By way of example, consider the following simple derivation, which induces $FS^{
 		\AxiomC{$\Gamma^{v_{k}}; m^{v_{i,j}}_{2,1}\vdash_{\mathtt{5}}  m^{v_{k}}_{2,2}$}
         \BinaryInfC{$\Gamma^{v_{k}} \vdash_{\mathtt{6}}  m^{v_{i}}_{2,1} \rightarrow m^{v_{k}}_{2,2}$}
 		\end{prooftree}
-\end{tiny}
+\end{footnotesize}
 
 
 	\caption{An Example Feedback Set}\label{fig:ask}
@@ -439,68 +495,31 @@ We can now generalize to the set of all feedback on a characteristic for a given
 The perception of agent $v_{j}$ for a set of messages $\mathcal{M}^{\mathcal{A}}_{S_{i}}$ from agents in $\mathcal{A}$ about service $S_{i}$ 
 is the sum of elements of the feedback set over the messages received about that service, weighted by the steps of the derivation at which it is obtained and further by the value $\mathtt{r}(k)$ of the rank of characteristic $k$: 
 
-\[
-AP^{v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}})=\sum_{FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k})}
-(1-\mathtt{r}(k)
-(\mathtt{s}(\psi^{v_{j}}_{i,k} \in FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k}))))
-%\mid \Gamma^{v_{j}}
-%\vdash_{\mathtt{s}}  Read(\phi^{v_{i}}_{i,j})\rightarrow \psi^{v_{j}}_{i,k}  \}
-\]
+\begin{array}}{l}
+\begin{displaymath}
 
+
+AP^{v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})=\\
+\sum_{FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k})}\\
+(1-\mathtt{r}(C_{k})(\mathtt{s}(\psi^{v_{j}}_{i,k} \in FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k}))))
+
+\end{displaymath}
+\end{array}
 \end{definition}
 
 
-Using the agent's perception of characteristic set, we can define the order of reputation with respect to services, which establishes a higher position for the agent whose perception on the characteristics set for that Service is greater.
+Using the agent's perception of characteristic set, we can define the order of reputation with respect to services and characteristics, which establishes a higher position for the agent whose perception on the characteristics set for that Service is greater.
 
 \begin{definition}[Reputation]
-$\forall v_{i}, v_{j}\in \mathcal{V}, S_{i}\in \mathcal{S}, v_{i}\prec v_{j} \leftrightarrow AP^{v_{i}}(\mathcal{M}^{\mathcal{A}}_{S_{i}})>AP^{v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}})$.
+$\forall v_{i}, v_{j}\in \mathcal{V}, S_{i}\in \mathcal{S}, v_{i}\prec v_{j} \leftrightarrow AP^{v_{i}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})>AP^{v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})$.
 \end{definition}
+
+
+\bibliographystyle{plain}
+\bibliography{unsecureNDC}
 
 \end{document}
 
-\subsection{Structural Rules}
-
-Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure \ref{fig:system3}. As a result the system qualifies as substructural, see e.g. \cite{restall}.
-
-\begin{figure*}[t]
-	\begin{prooftree}
-		\AxiomC{$\Gamma^{A}\vdash_{\mathtt{s}}  Write(\phi^{A}_{i})$}
-		\AxiomC{$\Gamma^{A}\vdash_{\mathtt{s}}  Trust(\phi^{B}_{j})$}
-		\RightLabel{Profile Weakening}
-		\BinaryInfC{$\Gamma^{A}; \phi^{B}_{j}\vdash_{\mathtt{s}}  Write(\phi^{A}_{i})$}
-		\end{prooftree}
-		
-		\begin{prooftree}
-		\AxiomC{$\Gamma^{A}, \phi^{A}_{i}; \phi^{B}_{i}\vdash_{\mathtt{s}}  Write(\psi^{A}_{k})$}
-		%\AxiomC{$A<B$}
-		\RightLabel{Profile Contraction}
-		\UnaryInfC{$\Gamma^{A}, \phi^{A}_{i}\vdash_{\mathtt{s}}  Write(\psi^{A}_{k})$}
-	\end{prooftree}
-	
-	\begin{prooftree}
-		\AxiomC{$\Gamma^{A}, \phi^{A}_{i}, \phi^{A}_{j}\vdash_{\mathtt{s}}  Write (\phi^{A}_{k})$}
-		\AxiomC{$\phi^{A}_{i}\nless \phi^{A}_{j}$}
-		\RightLabel{Profile Exchange}
-		\BinaryInfC{$\Gamma^{A}, \phi^{A}_{j}, \phi^{A}_{i}\vdash_{\mathtt{s}}  Write(\phi^{A}_{k})$}
-	\end{prooftree}
-	
-	\begin{prooftree}
-		\AxiomC{$\Gamma^{A} \vdash_{\mathtt{s}}  \phi^{B}_{i}$}
-		\AxiomC{$\Gamma^{B}, \phi^{B}_{i}\vdash_{\mathtt{s}}   \phi^{B}_{j}$ }
-		\RightLabel{Profile Cut}
-		\BinaryInfC{$\Gamma^{A}; \Gamma^{B}\vdash_{\mathtt{s}}   \phi^{B}_{j}$}
-	\end{prooftree}
-	\caption{The System \texttt{(un)SecureND}: Structural Rules}\label{fig:system3}
-\end{figure*}
-
-
-Weakening is constrained by an instance of $trust$: it says that a valid installation of $\phi^{A}_{i}$ is preserved under a profile extension in view of a trusted package $\phi^{B}_{j}$, i.e. one whose profile extension is provably consistent. 
-
-Contraction is constrained by preservation of package ordering: it says that a valid installation of $\phi^{A}_{k}$ is preserved when removing an instance of identical packages $\phi^{A}_{i}; \phi^{B}_{i}$, provided one removes the package from the higher repository  in the order dependency, so as to guarantee any further dependency below. 
-
-Exchange is doubly constrained by order: it says that a valid installation of $\phi^{A}_{k}$ is preserved under reorder of packages $ \phi^{A}_{i}, \phi^{A}_{j}$, if those come from the same repository $A$ and if there is no involved dependency between them. 
-
-Finally, the Cut rule expresses valid package execution under profile extension: if a package $\phi^{B}_{i}$ is validly executed under profile $\Gamma^{A}$ and a profile $\Gamma^{B}$ including $\phi^{B}_{i}$ allows execution of a package $\phi^{B}_{j}$, then the extended profile $\Gamma^{A}; \Gamma^{B}$ allows execution of $\phi^{B}_{j}$.
 
 
 \section{The Distrusted Uninstall Problem}\label{sec:distrusted}

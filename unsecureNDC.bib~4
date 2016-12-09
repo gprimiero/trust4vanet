@@ -2798,26 +2798,3 @@ Timestamp                = {2014.02.06}
 	year = "2009"
 }
 
-@inbook{Wei2012,
-	address = "Dordrecht",
-	author = "Wei, Yu-Chih and Chen, Yi-Ming",
-	booktitle = "{Human Centric Technology and Service in Smart Space: HumanCom 2012}",
-	doi = "10.1007/978-94-007-5086-9_14",
-	editor = "Park, James J. (Jong Hyuk) and Jin, Qun and {Sang-soo Yeo}, Martin and Hu, Bin",
-	isbn = "978-94-007-5086-9",
-	pages = "105--112",
-	publisher = "Springer Netherlands",
-	title = "{Reliability and Efficiency Improvement for Trust Management Model in VANETs}",
-	url = "http://dx.doi.org/10.1007/978-94-007-5086-9_14",
-	year = "2012"
-}
-
-@inproceedings{glenford,
-	author = "Vanni, R and Jaimes, L.M.S. and Mapp, G. and Moreira, E.",
-	booktitle = "{AICT 2016, The Twelfth Advanced International Conference on Telecommunications }",
-	pages = "14-19",
-	publisher = "IARIA",
-	title = "{Ontology Driven Reputation Model for VANET}",
-	year = "2016"
-}
-
