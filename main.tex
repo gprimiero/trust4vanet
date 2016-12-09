@@ -153,7 +153,7 @@ Rules from Figure \ref{fig:system0} define agent's profile construction from ser
 
 \subsection{Rules for message construction}
 
-The operational rules in Figure \ref{fig:system1} formulate compositionality of messages. 
+The operational rules in Figure \ref{fig:system1} formulate compositionality of messages. The rule $Atom$ establishes valid content within a user profile and across other profiles with satisfied requirements. $\bot$ formulates implication of access to contradictory messages, in which case the profile must be consistent with the negated access. $\wedge$-I allows message composition from distinct profiles; by $\wedge$-E, each composing message can be obtained from the combined profiles. $\vee$-I says that a combined profile can access any message produced from each of the composing profiles; by the elimination $\vee$-E, each message consistently inferred by each individual profile can also be executed under the extended profile. $\rightarrow$-Introduction expresses inference of a message from a combined profile as inference between messages (Deduction Theorem); its elimination $\rightarrow$-E allows to recover such inference as profile extension (Modus Ponens).
 
 \begin{figure*}[t]
 	\begin{prooftree}
@@ -214,13 +214,13 @@ The operational rules in Figure \ref{fig:system1} formulate compositionality of 
 	\caption{The System \texttt{(un)SecureND}: Operational Rules}\label{fig:system1}
 \end{figure*}
 
-The rule $Atom$ establishes valid content within a user profile and across other profiles with satisfied requirements. 
-%In the present version we assume $A<B$.
-$\bot$ formulates access to contradictory messages, in which case the profile must be consistent with the negated access. $\wedge$-I allows message composition from distinct profiles; by $\wedge$-E, each composing message can be obtained from the combined profiles (with $I=\{A,B\}$). $\vee$-I says that a combined profile can access any message produced from each of the composing profiles; by the elimination $\vee$-E, each message consistently inferred by each individual profile can also be executed under the extended profile. $\rightarrow$-Introduction expresses inference of a message from a combined profile as inference between messages (Deduction Theorem); its elimination $\rightarrow$-E allows to recover such inference as profile extension (Modus Ponens).
+
 
 \subsection{Access Rules}
 
-In Figure \ref{fig:system2} we present the access rules on messages. These allow a user's profile to act on messages from a distinct agent. 
+In Figure \ref{fig:system2} we present the access rules on messages. These allow an agent's profile to act on messages from a distinct agent. $\neg$-distribution expresses profile consistency: if an agent's profile does not allow inferring a message $\phi_{i,j}$, then it allows inferring any other message whose requirements do not include $\phi_{i,j}$. $\mathit{read}$ says that from any consistent profile a message can be read provided its requirements are satisfied (if any). $\mathit{trust}$ works as an elimination rule for $read$: it says that if a message is received and it preserves profile consistency, then it can be trusted. $\mathit{write}$ works as an elimination rule for $trust$: it says that a readable and trustable message can be broadcast. $\mathit{exec}$ says that every message consistently received by a profile is valid in it. The rule MTrust-I says that currently held message conflicting with a newly arrived message are mistrusted, i.e. removed from the current profile until none of its consequences are included; the corresponding MTrust-E elimination allows to trust any message consistent with the conflict resolution by removal of the mistrusted message in the user profile, including any required dependency, as expressed by the side condition that requires checking with any other agent who has higher reputation than the sender of the original message. The side condition can be modified at will, e.g. to design a protocol that will restore previous information if a sufficient number of other agents with higher reputation support it. \textit{mistrust} is a flag for facilitating removal of messages present in the user profile conflicting in view of incoming new information. 
+
+
 
 
 %\Gamma^{v_{i}};\Gamma^{v_{j}}\vdash_{\mathtt{s}}  \psi^{v_{j}}_{i,l}
@@ -293,14 +293,6 @@ In Figure \ref{fig:system2} we present the access rules on messages. These allow
 \end{figure*}
 
 %
-$\neg$-distribution expresses profile consistency: if a user profile does not allow inferring a message, then it allows inferring any other message that has no requirements including it. $\mathit{read}$ says that from any consistent profile a message can be read provided its requirements are satisfied (if any). $\mathit{trust}$ works as an elimination rule for $read$: it says that if a message is received and it preserves profile consistency, then it can be trusted. $\mathit{write}$ works as an elimination rule for $trust$: it says that a readable and trustable message can be sent over the network. $\mathit{exec}$ says that every message that is safely installed in a consistent profile holds in it. 
-
-%The Introduction rule for distrust DTrust-I expresses the principle that a message non-consistent with its receiving profile can be negated to be trustworthy; the corresponding elimination DTrust-E uses $\rightarrow$-introduction to induce $write$ of any message consistent with the conflict resolution. 
-The rule MTrust-I says that currently held message conflicting with a newly arrived message are mistrusted, i.e. removed from the current profile until none of its consequences are included; the corresponding MTrust-E elimination allows to trust any message consistent with the conflict resolution by removal of the mistrusted message in the user profile, including any required dependency, as expressed by the side condition that requires checking with any other agent who has higher reputation than the sender of the original message. 
-%By the latter set of rules, 
-%\textit{distrust} is a flag for preventing installation of conflicting external packages, while 
-\textit{mistrust} is a flag for facilitating removal of messages present in the user profile conflicting in view of incoming new information. 
-%Notice that both untrust functions are triggered by the querying operation on a repository, hence conflicts are highlighted before installation.
 
 
 
@@ -314,7 +306,7 @@ We can now offer a more general interpretation of the derivability relation $\vd
 
 \subsection{Structural Rules}
 
-Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure \ref{fig:system3}. As a result the system qualifies as substructural, see e.g. \cite{restall}. Weakening is constrained by an instance of $trust$: it says valid information is preserved under vehicle's profile extension, assuming the latter is provably consistent and therefore no refresh is required. Contraction is constrained by preservation of ordering: it says that removing identical messages from  a vehicle's profile is admissible, with the constraint that the copy from the agent with higher reputation is preserved. Exchange is doubly constrained by order: it says that reorder of messages is admissible if there is no involved dependency between them. Finally, the Cut rule expresses validity under profile extension: if a message $\phi_{i,j}$ is validly for agent $v_{i}$ and after messaging it to $v_{j}$ the latter can infer $\phi_{i,k}$, then $v_{i}$ can infer $\phi_{i,k}$ by setting a message protocol with $v_{j}$.
+Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure \ref{fig:system3}. As a result the system qualifies as substructural, see e.g. \cite{restall}. Weakening is constrained by an instance of $trust$: it says that valid information is preserved under an agent's profile extension, assuming the latter is provably consistent and therefore no refresh is required. Contraction is constrained by preservation of ordering: it says that removing identical messages from  an agent's profile is admissible, with the constraint that the copy from the agent with higher reputation is preserved. Exchange is constrained by dependency: it says that reorder of messages is admissible if there is no involved dependency between them. Finally, the Cut rule expresses validity under profile extension: if a message $\phi_{i,j}$ is validly for agent $v_{i}$ and after messaging it to $v_{j}$ the latter can infer $\phi_{i,k}$, then $v_{i}$ can infer $\phi_{i,k}$ by setting a message protocol with $v_{j}$.
 
 
 \begin{figure*}[t]
@@ -352,7 +344,7 @@ Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure 
 	\caption{The System \texttt{(un)SecureND}: Structural Rules}\label{fig:system3}
 \end{figure*}
 
-The cut rule justifies the following result:
+%The cut rule justifies the following result:
 
 \begin{theorem}[Normalization]
 Any $\mathtt{(un)SecureND}$ derivation with an occurrence $c$ of the $Cut$ rule can be transformed into another derivation with the same end sequent without $c$ using only trust.

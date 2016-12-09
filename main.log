@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.31)  9 DEC 2016 14:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.31)  9 DEC 2016 14:55
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -389,14 +389,15 @@ Underfull \vbox (badness 2134) has occurred while \output is active []
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[2] [3]
+[2]
 \myBox3=\box39
 \myScoreStart3=\dimen161
 \myCenter3=\dimen162
 \myScoreEnd3=\dimen163
-LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 461.
+ [3]
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 453.
  [4]
-Overfull \hbox (14.45784pt too wide) detected at line 512
+Overfull \hbox (14.45784pt too wide) detected at line 504
 []
  []
 
@@ -422,7 +423,7 @@ Here is how much of TeX's memory you used:
  6941 multiletter control sequences out of 15000+600000
  48276 words of font info for 108 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 38i,8n,26p,1442b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,8n,26p,1747b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
@@ -446,7 +447,7 @@ crr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 251078 bytes).
+Output written on main.pdf (6 pages, 251021 bytes).
 PDF statistics:
  120 PDF objects out of 1000 (max. 8388607)
  87 compressed objects within 1 object stream
