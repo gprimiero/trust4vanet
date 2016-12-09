@@ -39,7 +39,9 @@ Vehicle Ad Hoc Networks (VANETs) are becoming an important part of intelligent t
 
 Vehicle Ad Hoc Networks (VANETs) consist of vehicles and roadside units networks created to enhance transportation systems through V2V and V2I communications. Due to their distributed and dynamic nature, such networks are open to several types of threats, including false message propagation. Trust and reputation are among the concept most used to ensure integrity, reliability  and safety of services. Several methods have been implemented, see \cite{Soleymani2015} for a recent overview. Trust models in VANETs differ especially for the main object of the model: entity-centric \cite{5641621, GomezMarmol:2012:TTR:2160992.2161100}, data-centric \cite{conf/infocom/RayaPGH08, Lo2009} and combined \cite{Wei2012}. Among the models that combine trust and reputation, \cite{glenford} offers an analysis that accounts for reputation as a characteristic of message forwarding, vehicles, drivers and other agents as well: here reputation is therefore based on a descriptive ontology of the model and is used to feedback in the system. 
 
-Unfortunately, none of the current models seem to have focused on a formal correctness requirement to ensure that derivability of messages passing protocol is checkable. Moreover, an additional problem seems to have been ignored, namely how to ensure that safety is preserved over transitive message passing operations. This paper provides a solution to both problems above. We formulate a proof-theoretic translation of the trust and reputation model for VANET offered in \cite{glenford} in an extension of the natural deduction calculus \texttt{(un)SecureND} from \cite{DBLP:conf/ifiptm/Primiero16}. The aim is, first of all, to show that the trust properties instantiated through our calculus faithfully reflect those in a VANET network; accordingly, we show how non-trustworthy interactions can be proven to be such through a proof-checking method. On a higher level, the model offered by \texttt{(un)SecureND} has been proven formally correct through its translation to a Coq library, and as such the present translation guarantees a similar property for the whole VANET model. Finally, thanks to the structural properties of our calculus, we consider a transitive messgae passign operation in the form of instances of a cut rule, whose normalization guarantees safety.
+In most of these models the analysis relies on simulations for an evaluation of efficacy. Yet, such simulations cannot guarantee that unpredictable and unsafe behaviour are excluded. Since VANETs are meant to include safety and emergency messages, more reliable methods are essential. The only method to produce exhaustive safety control is through formal verification, but unfortunately none of the current mtrust and reputation odels seem to have focused on a formal correctness requirement to ensure that protocols are checkable. The only formal analysis available is in \cite{DBLP:conf/vtc/KonurF11} for a congestion control protocol using a model checking technique to investigate its correctness and effectiveness, but it does not focus explicitly on trust or reputation. Other formal verification techniques like theorem proving seem to have been ignored so far. Moreover, an additional unaddressed problem seems to be that ensuring that safety is preserved over transitive operations. 
+
+The present paper provides a solution to both problems above. In Section \ref{sec:logic} we formulate a proof-theoretic translation of the trust and reputation model for VANET offered in \cite{glenford} in an extension of the natural deduction calculus \texttt{(un)SecureND} from \cite{DBLP:conf/ifiptm/Primiero16}. The aim is, first of all, to show that the trust properties instantiated through our calculus faithfully reflect those in a VANET network; accordingly, we show how non-trustworthy interactions can be proven to be such through a proof-checking method. On a higher level, the model offered by \texttt{(un)SecureND} has been proven formally correct through its translation to a Coq library, and as such the present translation guarantees a similar property for the whole VANET model. Thanks to the structural properties of our calculus, we show how transitive message passing operations in the form of instances of a cut rule are guaranteed safe through applying a normalization result. In Section \ref{sec:opportunistic} we illustrate protocols for handshaking, recipient selection and message passing based on reputation. In Section \ref{sec:reputation} the reputation model based on an evaluation of feedback messages parametrised in view of a temporal measure and a ranking of the relevant service characteristic of the message is offered.
 
 
 %\section{Related Work}\label{sec:related}
@@ -47,7 +49,7 @@ Unfortunately, none of the current models seem to have focused on a formal corre
 
 \section{\texttt{(un)SecureND}}\label{sec:logic}
 
-$\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust and distrust protocols introduced in \cite{primiero_secureND} for the positive fragment  and in \cite{DBLP:conf/ifiptm/Primiero16} for the negation complete extension. We offer here a slightly modified version adapted for the VANET network. In particular, the present version introduces: contexts as sets of sets; formulas with multiple indices to account for service and message numbers; ranking on service characteristics. We start with introducing the language of our logic:
+$\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust and distrust protocols introduced in \cite{primiero_secureND} for the positive fragment  and in \cite{DBLP:conf/ifiptm/Primiero16} for the negation complete extension. We offer here a slightly modified version adapted for a VANET network. In particular, the present version introduces: contexts as sets of sets; formulas with multiple indices to account for service and message numbers; ranking on service characteristics. We start with introducing the language of our logic:
 
 \begin{definition}[Syntax of $\mathtt{(un)SecureND}$]\label{def:syntax} %The syntax  is defined by the following alphabet:
 	%
@@ -55,10 +57,11 @@ $\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust
 	\begin{array}{l}
 	\mathcal{A}^{\prec}:= \{\mathcal{V, R}\}\\
 	\mathcal{V}:= \{v_{1}\prec \ldots \prec v_{n}\}\\
-	\mathcal{R}:= \{rsu_{1}\ldots rsu_{n}\}\\
+	\mathcal{R}:= \{rsu_{1}\prec\ldots \prec rsu_{n}\}\\
 	\mathcal{S}:= \{S_1, \dots, S_{n}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
 	\mathcal{C}:= \{C_{1}\leq \dots \leq C_{n}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
-	\mathcal{M^{\mathcal{A}}}:= a^{\mathcal{A}}_{S_{i},C_{j}}\mid \neg \phi^{\mathcal{A}}_{i,j}\mid \phi^{\mathcal{A}}_{i,j}\rightarrow \phi^{\mathcal{A}}_{k,l}\mid \phi^{\mathcal{A}}_{i,j}\wedge \phi^{\mathcal{A}}_{k,l}\mid \phi^{\mathcal{A}}_{i,j}\vee \phi^{\mathcal{A}}_{k,l} \mid \bot\\
+	\mathcal{M^{\mathcal{A}}}:= a^{\mathcal{A}}_{S_{i},C_{j}}\mid \neg \phi^{\mathcal{A}}_{i,j}\mid \phi^{\mathcal{A}}_{i,j}\rightarrow \phi^{\mathcal{A}}_{k,l}\mid \phi^{\mathcal{A}}_{i,j}\wedge \phi^{\mathcal{A}}_{k,l}\\
+	\qquad \qquad \mid \phi^{\mathcal{A}}_{i,j}\vee \phi^{\mathcal{A}}_{k,l} \mid \bot\\
 	mode:= Read(\mathcal{M}^{\mathcal{A}})\mid Write(\mathcal{M}^{\mathcal{A}})\mid Trust(\mathcal{M}^{\mathcal{A}})\\
 	RES:= \mathcal{M}^{\mathcal{A}}\mid mode\mid \neg RES\\
 	\Gamma^{\mathcal{A}}:= 
@@ -71,9 +74,8 @@ $\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust
 \end{definition}
 %
 
-\subsection{Services, Messaging and Protocols}
-
-$\mathcal{M^{\mathcal{A}}}$ is a set of boolean formulae, closed under connectives, expressing messages. The language includes $\bot$ to express conflicts. $\mathcal{A}$ is the set of agents issuing messages and including vehicles $\mathcal{V}$ and RSUs $\mathcal{R}$. Messages are then signed by agents (vehicles or RSU) generating them and with service and characteristic identifiers, so that: $\phi^{v_{i}}_{i,j}$ says that message $\phi$ about service $S_{i}$ and characteristic $C_j$ is generated by vehicle $v_{i}$. We assume here and throughout that both services $\mathcal{S}$ and characteristics $\mathcal{C}$ of services are given as posets. To simplify notation, a message $\phi^{v_{i}}_{S_{i},C_{j}}$ is usually abbreviated as $\phi^{v_{i}}_{{i},{j}}$. $mode$ is a variable for reading, writing and trusting messages, closed under negation. An agent profile $\Gamma^{\mathcal{A}}$ is the current list of all messages collected by the agent either from other agents or from various available sensors and other networks. For the present purposes, the latter ones will be indexed at their first vehicle or RSU collecting it.
+%\subsection{Services, Messaging and Protocols}
+$\mathcal{A}$ is the set of agents issuing messages and including vehicles $\mathcal{V}$ and RSUs $\mathcal{R}$. Below we will focus in particular on V2V communication, without loss of generality. $\mathcal{M^{\mathcal{A}}}$ is a set of boolean formulae, closed under connectives, expressing messages. The language includes $\bot$ to express conflicts. Messages are signed by agents in $\mathcal{A}$ generating them and by service and characteristic identifiers, so that: $\phi^{v_{i}}_{i,j}$ says that message $\phi$ about service $S_{i}$ and characteristic $C_j$ is generated by vehicle $v_{i}$. We assume here and throughout that characteristics $\mathcal{C}$ of services are given as posets and their ordering is used to order messages below in Definition \ref{def:dependencypackages}. To simplify notation, a message $\phi^{v_{i}}_{S_{i},C_{j}}$ is usually abbreviated as $\phi^{v_{i}}_{{i},{j}}$. $mode$ is a variable for reading, writing and trusting messages, closed under negation. An agent profile $\Gamma^{\mathcal{A}}$ is the current list of all messages collected by the agent either from other agents or from various available sensors and other networks. For the present purposes, the latter ones will be indexed at their first vehicle or RSU collecting it, so as not to add networks as separate agents.
 
 
 \begin{definition}[Formulas]
@@ -84,7 +86,7 @@ A formula $\Gamma^{v}_{i} \vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ says that a me
 A formula $\vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ says that a message $\phi$ $\phi$ about service $i$ and characteristic $k$ signed from agent $v_{j}$ holds for \textit{any} agent's profile at step $\mathtt{s}$.
 \end{definition}
 
-Messages satisfy a ranking based on that of characteristics:
+Messages satisfy a ranking based on characteristics:
 
 \begin{definition}\label{def:dependencypackages}
 $\phi^{v_{j}}_{i,k}<\phi^{v_{j}}_{i,l}$ iff $C_{k}\leq C_{l} \in S_{i}$ 
@@ -364,7 +366,7 @@ Normalization justifies a safety property of our trust and reputation model over
 
 
 
-\section{Opportunistic Forwarding}
+\section{Opportunistic Forwarding}\label{sec:opportunistic}
 
 %\subsection{Handshaking Protocol}
 
@@ -435,7 +437,7 @@ In Figure \ref{fig:mp}, we present an example derivation mimicking the message p
 
 
 
-\section{Reputation Model}
+\section{Reputation Model}\label{sec:reputation}
 
 In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across agents. Higher reputation is modelled by feedback aggregation. Our system integrates the elements of the main feedback 6-tuple function from \cite{glenford}. In particular, time is mimicked directly by derivation steps; context is embedded by the user profile; service and characteristics are modelled by messages. To model the set of feedback that a given agent provides with respect to a given message related to a service and characteristic, we will have to collect all formulas following receiving a message:
 
@@ -532,270 +534,3 @@ A characteristic of the logic \texttt{(un)SecureND} is its substructural nature,
 
 \end{document}
 
-
-
-\section{The Distrusted Uninstall Problem}\label{sec:distrusted}
-
-
-
-Consider a profile $\Gamma^{A}=\{\phi_{1}^{A}< \dots< \phi_{n}^{A}\}$ and a package $\phi_{m}^{B}$ which one wishes \textit{not to install}. This might be due to a principled decision or an explicit conflict in view of an installed package, which one explicitly wants to preserve. We call such a package $\phi_{m}^{B}$ \textit{distrusted}. In the calculus, this corresponds to the conclusion of the DTrust-I rule
-
-$$\Gamma^{A}\vdash_{\mathtt{s}}  \neg Trust(\phi_{m}^{B})$$
-
-The \textit{Distrusted Uninstall Problem} is to determine which packages can be installed in $\Gamma^{A}$ that do not depend from $\phi_{m}^{B}$. Our formulation allows to express this principle as the request to obtain the maximal set of formulas $\{\psi_{i}^{N}\}$ from any repository $N\geq B$ such that 
-
-$$\Gamma^{A}\vdash_{\mathtt{s}}  \neg Trust(\phi_{m}^{B})\rightarrow \{\psi_{i}^{N}\}$$
-
-By DTrust-E, this guarantees the right to install $\psi_{i}^{N}$. 
-
-The first step consists in transforming our problem in a formulation that removes the trust condition.
-
-\begin{lemma}
-	$\Gamma^{A}\vdash_{\mathtt{s}}  \neg Trust(\phi_{m}^{B})\rightarrow \psi_{i}^{N}$ iff $\Gamma^{A}; \neg \phi_{m}^{B}\vdash_{\mathtt{s}}  \psi_{i}^{N}$.
-\end{lemma}
-
-\begin{proof} 
-	For the left-to-right direction: By the assumption $\Gamma^{A}\vdash_{\mathtt{s}}  \neg Trust(\phi_{m}^{B})$ and $\neg$-distribution, $\Gamma^{A}\vdash_{\mathtt{s}}  Trust(\neg \phi_{m}^{B})$; by the same rule and the premise $\Gamma^{A}\vdash_{\mathtt{s}}  \neg Trust(\phi_{m}^{B})\rightarrow \psi_{i}^{N}$ we get $\Gamma^{A}\vdash_{\mathtt{s}}  Trust( \neg\phi_{m}^{B})\rightarrow \psi_{i}^{N}$. Now apply $write$ to both occurrences of $Trust( \neg\phi_{m}^{B})$ and eliminate the function through $exec$; by $\rightarrow$-E we obtain $\Gamma^{A}; \neg \phi_{m}^{B}\vdash_{\mathtt{s}}  \psi_{i}^{N}$.
-	
-	For the right-to-left direction: By the assumption $\Gamma^{A}; \neg \phi_{m}^{B}\vdash_{\mathtt{s}}  \psi_{i}^{N}$ it holds $\Gamma^{A}; \neg \phi^{B}_{m}: profile$, which justifies $\Gamma^{A}\vdash_{\mathtt{s}}  Read(\neg \phi^{B}_{m})$ by $read$, $\Gamma^{A}\vdash_{\mathtt{s}}  Trust(\neg \phi^{B}_{m})$ by the previous and $trust$ and $\Gamma^{A}\vdash_{\mathtt{s}}  \neg Trust( \phi^{B}_{m})$ by $\neg$-distribution. It follows $\Gamma^{A}; \neg Trust( \phi^{B}_{m})\vdash_{\mathtt{s}}  \psi_{i}^{N}$ by substitution from the assumption, and $\Gamma^{A}\vdash_{\mathtt{s}}  \neg Trust(\phi_{m}^{B})\rightarrow \psi_{i}^{N}$ is obtained by $\rightarrow$-I.
-	%By $trust$, $write$, $\rightarrow$-E and $\neg$-distribution.
-\end{proof}
-
-
-We can now reduce the latter to an operation on all packages coming from the repository involved by the distrust operation:
-
-
-\begin{lemma}\label{th:setminus}
-	%The Distrust Uninstall Problem is equivalent to a proof of 
-	If $\Gamma^{A}; \neg \phi_{m}^{B}\vdash_{\mathtt{s}}  \psi_{i}^{N}$ then $\Gamma^{A}; \Gamma^{B}\setminus \{\phi_{m}^{B}\}\vdash_{\mathtt{s}}  \psi_{i}^{N}$.
-\end{lemma}
-
-\begin{proof} 
-	
-$\Gamma^{A}$ can be extended with every package from $B$; by definition $\Gamma^{A}; \neg \phi_{m}^{B}\vdash_{\mathtt{s}}  \neg Trust(\phi^{B}_{m})$, hence by Weakening this is possible except for $\phi^{B}_{m}$ as it does not satisfy $trust$.
-\end{proof}
-
-The above corresponds to finding the maximal set of formulas in $\Gamma^{B}$ that allows to execute $\psi_{i}^{N}$ without requiring $\phi_{m}^{B}$ in the profile. To this aim, it is enough to find all $\phi_{l}^{B}\nless\phi_{m}^{B}$, i.e. the set of packages in $B$ that have no dependencies from $\phi_{m}^{B}$. 
-
-What has been so far restricted to one repository, can now be generalised to any repository that preserves the dependency condition:
-
-
-\begin{lemma}\label{th:gen}
-	$\Gamma^{A};\phi_{l}^{N}\vdash_{\mathtt{s}}  Write(\phi_{i}^{N})$ iff 
-	%$(\phi_{l}^{N}<\phi_{m}^{N})$ 
-	$(\phi_{l}^{N}\nless \phi_{m}^{N} \nless \psi^{N}_{i})$  for any distrusted package $\phi_{m}^{N}$ and any repository $N> A$.
-\end{lemma}
-
-\begin{proof} 
-	For the right-to-left direction. Assume the following: $\Gamma^{A};\phi_{l}^{N}\vdash_{\mathtt{s}}  Write(\phi_{i}^{N})$ and $\Gamma^{A};\phi_{l}^{N}\vdash_{\mathtt{s}}  \neg Trust(\phi^{N}_{m})$. Then: if $\phi^{N}_{l}< \phi^{N}_{m}$, then $\Gamma^{A}; \phi^{N}_{l}\vdash_{\mathtt{s}}  \phi^{N}_{m}$ by Atom, contradicting the distrust assumption; and if $\phi^{N}_{m}< \phi^{N}_{i}$ then similarly $\phi^{N}_{m}\vdash_{\mathtt{s}}  \phi^{N}_{i}$ and by Weakening it is possible to obtain $\Gamma^{A};\phi_{l}^{N},\phi^{N}_{m} \vdash_{\mathtt{s}}  Write(\phi_{i}^{N})$, again contradicting the distrust assumption.
-	
-	For the left-to-right direction. Assume $(\phi_{l}^{N}\nless \phi_{m}^{N} \nless \phi^{N}_{i})$ and $\Gamma^{A};\phi_{l}^{N}\vdash_{\mathtt{s}}  \neg Trust(\phi^{N}_{m})$. Then: because $\phi_{l}^{N}\nless \phi_{m}^{N}$, the second assumption above does not require to remove $\phi_{l}^{N}$ as by Lemma \ref{th:setminus}; and because $\phi_{m}^{N} \nless \phi^{N}_{i}$, installing the latter does not require installing the former, as prescribed by Definition \ref{def:dependencypackages} via the $exec$ rule. Hence $\Gamma^{A};\phi_{l}^{N}\vdash_{\mathtt{s}}  Write(\phi_{i}^{N})$ holds.
-\end{proof}
-
-Finally, our main result is obtained:
-
-\begin{theorem}(\textbf{Distrusted Uninstall})
-	Given a package $\phi^{B}_{m}$ distrusted under profile $\Gamma^{A}$, a package $\phi^{N}_{i}$ can be installed in $\Gamma^{A}$ iff $\phi^{B}_{m}\nleq \phi^{N}_{i}$.
-\end{theorem}
-
-\begin{proof} 
-	From Definition \ref{def:distrustedproblem} and Lemma \ref{th:gen} by substitution.
-\end{proof}
-
-This last result identifies distrusted packages as those that have at least a dependency from one package conflicting with the current installation profile.
-
-
-\section{The Mistrusted Uninstall Problem}\label{sec:mistrusted}
-
-Consider a profile $\Gamma^{A}=\{\phi_{1}^{A}, \dots, \phi_{n}^{A}\}$, and a package $\phi^{B}_{m}$ which one wishes to install in it: in the calculus, this corresponds to the conclusion of an instance of the Write rule, $\Gamma^{A}\vdash_{\mathtt{s}}  Write(\phi^{B}_{m})$. Assume that $\phi^{B}_{m}$ is in conflict with the given profile 
-
-$$\Gamma^{A}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m}) \rightarrow \bot$$
-
-The \textit{Mistrusted Uninstall Problem} is to determine the set $\{\phi^{A}_{i}\}$ of packages in $\Gamma^{A}$ that are in conflict with $\phi^{B}_{m}$ and which should be removed when installing it. We will call any such package $\phi^{A}_{i}$ a \textit{mistrusted package}. Hence the problem is to identify the minimal set of formulas $\phi_{i}^{A}$ such that
-
-$$\Gamma^{A}\setminus \{\phi^{A}_{i}\}; \phi^{B}_{m}\vdash_{\mathtt{s}}  \neg Trust(\phi^{A})$$
-
-and by MTrust-E, given any other set of formulas $\Gamma^{C}$ required by $\phi^{B}_{m}$, it allows 
-
-$$\Gamma^{A}\setminus \{\phi^{A}_{i}\}; \Gamma^{C} \vdash_{\mathtt{s}}  Trust(\phi^{B}_{m})$$
-
-
-We start by identifying the minimal subset of packages from the current installation profile that satisfies the conflict:
-
-\begin{lemma}\label{th:gen2}
-	If $\Gamma^{A}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$, then $\exists \Gamma'^{A}\subseteq\Gamma^{A}$
-	such that $ \Gamma'^{A}=\{\phi^{A}_{i}< \dots< \phi^{A}_{n}\} \vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$.
-%such that $\Gamma'^{A}\ni \phi^{A}_{i}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$ and $\forall \phi^{A}_{j}> \phi^{A}_{i}, \phi^{A}_{j}\in \Gamma'^{A}$
-\end{lemma}
-%
-\begin{proof} 
-$\forall \phi^{A}_{i}, \phi^{A}_{j}\in \Gamma^{A}$, if $\phi^{A}_{i}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$ and $\phi^{A}_{i}<\phi^{A}_{j}$, then $\phi^{A}_{j}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$. And $\forall \phi^{A}_{h}<\phi^{A}_{i}$, $\phi^{A}_{h}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})$. Hence it suffices to identify the maximal $\phi^{A}_{i}$ in conflict with $\phi^{B}_{m}$ and to include it in $\Gamma'^{A}$ together with all packages in $\Gamma^{A}$ that depend from it. We will call $\Gamma'^{A}$ a maximally mistrusted set.
-\end{proof}
-
-
-\begin{lemma}\label{th:gen3.0}
-Consider a maximally mistrusted $\Gamma'^{A}\subseteq \Gamma^{A}$ such that\\ $ \Gamma'^{A} \vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$ as of Lemma \ref{th:gen2}. Then $\forall \phi^{A}_{i}\in \Gamma'^{A}$, $\phi^{A}_{i} < Read(\phi^{B}_{m})\rightarrow \bot$.
-\end{lemma}
-
-\begin{proof}
-This holds by construction of $\Gamma'^{A}$ in Lemma \ref{th:gen2} and the Dependency Insertion Rule.
-\end{proof}
-
-%\begin{definition}
-%	If $\phi^{A}_{i}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$ then $\forall \phi^{A}_{j}>\phi^{A}_{i}, \phi^{A}_{j}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$.
-%\end{definition}
-
-
-
-\begin{lemma}\label{th:gen3}
-	If $\phi^{A}_{i}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$, then $ \phi^{A}_{i}\nless \phi_{m}^{B}$.
-\end{lemma}
-%
-%\begin{proof} 
-%XX
-%\end{proof}
-%
-%
-%\begin{theorem}\label{th:mis1}
-%	$\Gamma^{A}\setminus \{\phi^{A}_{i}\}; \Delta^{C} \vdash_{\mathtt{s}}  Trust(\phi^{B}_{m})$ iff $ \phi^{A}_{i}\nless \phi_{m}^{B}$.
-%\end{theorem}
-
-\begin{proof} 
-Staring from $\phi^{A}_{i}\vdash_{\mathtt{s}}  Read(\phi^{B}_{m})\rightarrow \bot$ we apply D-Trust-I, $\neg$-distribution, $write$ and  $exec$ to obtain $\phi^{A}_{i}\vdash_{\mathtt{s}}  \neg \phi^{B}_{m}$, from which we can obtain $\phi^{A}_{i}< \neg \phi^{B}_{m}$ from Dependency Insertion and $\phi^{A}_{i}\nless \phi^{B}_{m}$ by contrapposition.
-
-\end{proof}
-
-
-%To obtain the set $\{\phi^{A}_{i}\}$, we need to check $$\forall \phi_{i}^{A}\in\Gamma^{A}, \phi^{A}_{i}\vdash_{\mathtt{s}}  Trust(\phi_{m}^{B})$$
-%i.e. any formula in $\Gamma^{A}$ such that it satisfies dependencies for our conflicting package. This problem is equivalent to
-
-%\begin{theorem}
-%	$\phi_{i}^{A}\vdash_{\mathtt{s}}  Write(\phi_{m}^{B})$ iff $(\phi_{i}^{A}<\phi_{m}^{B}) \in\Gamma^{B}$.
-%\end{theorem}
-
-
-
-
-
-
-\begin{theorem}(\textbf{Mistrusted Uninstall})
-	Given a package $\phi^{B}_{m}$ to be installed under profile $\Gamma^{A}$, a package $\phi^{A}_{i}$ is mistrusted in $\Gamma^{A}$ iff 
-	\begin{enumerate}
-	\item $\phi^{A}_{i}\leq \phi^{A}_{j}$
-	\item $\phi^{A}_{j}< Read(\phi^{B}_{m})\rightarrow \bot$ and
-	\item $\phi^{A}_{i}\nless \phi^{B}_{m}$.
-	\end{enumerate}
-	
-	%$\phi_{i}^{A}\leq \neg \phi^{B}_{m}$.
-	%$\phi_{i}^{A}\leq \neg \phi^{B}_{m}$.
-\end{theorem}
-
-\begin{proof}
-The first condition is required by Lemma \ref{th:gen3.0} to include all the dependencies in the maximally mistrusted set. The second condition holds from Lemma \ref{th:gen3}. Finally, the third condition holds by contradiction: if $\phi^{A}_{i}< \phi^{B}_{m}$, then $\phi^{A}_{i}\vdash_{\mathtt{s}}  \phi^{B}_{m}$ by Dependency Insertion; it follows by Weakening that $\phi^{A}_{i}; \phi^{B}_{m}: profile$ and hence $\phi^{B}\vdash_{\mathtt{s}}  Trust (\phi^{A}_{i})$.
-\end{proof}
-
-
-This last result identifies packages to be removed as those that are in maximally mistrusted set and do not satisfy any dependency for the package to be installed under the current profile.
-
-
-
-\section{An Example}\label{sec:example}
-
-Consider the following scenario. A user on a Debian based system has the following installation profile:
-
-
-
-$$
-\Gamma^{m-f-nf}
-\left\{
-\begin{array}{l}
-\Gamma^{main}=\{\phi^{m}_{1},\phi^{m}_{2}\}\\
-\Gamma^{free}=\{\psi^{f}_{1}\}\\
-\Gamma^{nonfree}=\{\xi^{nf}_{1}\}\\
-\end{array}
-\right\}
-$$
-
-with the following dependencies
-
-$$
-\Gamma^{m-f-nf}
-\left\{
-\begin{array}{l}
-\phi^{m}_{1}<\psi^{f}_{1}\\
-\phi^{m}_{2}<\psi^{f}_{1}\\
-\psi^{f}_{1}<\xi^{nf}_{1}\\
-\end{array}
-\right\}
-$$
-Assume the user distrusts a package $\psi^{f}_{n}$, e.g. because it is considered harmful or unsecure. The Distrusted Uninstall Problem asks which packages can be further installed in $\Gamma^{m-f-nf}$ without installing $\psi^{f}_{n}$.  Consider now a package $\psi^{f}_{2}\ngtr \psi^{f}_{n}$, then the following derivation holds:
-
-
-\begin{prooftree}
-		%\noline
-		
-		\AxiomC{D}
-						\UnaryInfC{$\Gamma^{m-f-nf}\vdash_{\mathtt{s}}  \neg Trust(\psi^{f}_{n})$}		
-					\AxiomC{D'}
-				
-		\UnaryInfC{$\Gamma^{m-f-nf}\vdash_{\mathtt{s}}  Read(\psi^{f}_{2})$}
-		\AxiomC{$\psi^{f}_{n}\nless \psi^{f}_{2}$}
-	%	\AxiomC{$\Gamma^{m-f-nf}; \psi^{f}_{2}\vdash_{\mathtt{s}}  wf$}		
-		\RightLabel{}
-%		\TrinaryInfC{$\Gamma^{m-f-nf}; \psi^{f}_{2}\vdash_{\mathtt{s}}  wf$}
-			\TrinaryInfC{$\Gamma^{m-f-nf}\vdash_{\mathtt{s}}  Write(\psi^{f}_{2})$}
-	\end{prooftree}
-In other words the flagging of $\psi^{f}_{n}$ as distrustful does not impede the installation of a package $\psi^{f}_{2}$ if the latter does not depend on the former.
-
-Assume moreover that the user wishes to install an additional package $\xi^{nf}_{2}>\phi^{m}_{1}$, but such that  $\phi^{m}_{2}\vdash_{\mathtt{s}}  Read(\xi^{nf}_{2})\rightarrow \bot$: in other words, $\xi^{nf}_{2}$ depends from $\phi^{m}_{1}$, but is in conflict with $\phi^{m}_{1}$ (which is possible, given the latter does not depend on $\phi^{m}_{1}$). Then assuming a package $\psi^{f}_{2}$ replacing the functionalities of $\phi^{m}_{2}$,  the following derivation holds:
-
-
- 
-\begin{prooftree}
-		%\noline
-		
-		\AxiomC{$\phi^{m}_{2}\vdash_{\mathtt{s}}  Read(\xi^{nf}_{2})\rightarrow \bot$}
-		\AxiomC{$\phi^{m}_{2}<\psi^{f}_{1}$}
-						\BinaryInfC{$\Gamma^{m-f-nf}\setminus \{\phi^{m}_{2}<\psi^{f}_{1}\}; \xi^{nf}_{2}\vdash_{\mathtt{s}}  \neg Trust(\phi^{m}_{2}<\psi^{f}_{1})$}		
-						\AxiomC{$\psi^{f}_{2};\xi^{nf}_{2}: profile$}
-				
-		\BinaryInfC{$\Gamma^{m-f-nf}\setminus \{\phi^{m}_{2}<\psi^{f}_{1}\}; \xi^{nf}_{2}\vdash_{\mathtt{s}}  Write(\psi^{f}_{2})$}
-	\end{prooftree}
-In other words the installation of $\xi^{nf}_{2}$ requires removing $\phi^{m}_{2}<\psi^{f}_{1}$ and it is compatible with the installation of $\psi^{f}_{2}$.
-
-
-%\section{The \texttt{(un)SecureNDC} Coq Library}
-
-
-
-%\section{References}
-%Generated by bibtex from your ~.bib file.  Run latex,
-%then bibtex, then latex twice (to resolve references)
-%to create the ~.bbl file.  Insert that ~.bbl file into
-%the .tex source file and comment out
-%the command \texttt{{\char'134}thebibliography}.
-% This next section command marks the start of
-% Appendix B, and does not continue the present hierarchy
-%\section{More Help for the Hardy}
-%The sig-alternate.cls file itself is chock-full of succinct
-%and helpful comments.  If you consider yourself a moderately
-%experienced to expert user of \LaTeX, you may find reading
-%it useful but please remember not to change it.
-%\balancecolumns % GM June 2007
-% That's all folks!
-
-\section{Conclusions}
-
-In this paper we have formulated two variants to the Uninstall Problem. Each relies on a different semantic qualification of untrusted packages required to be removed or prevented from installation in a given installation profile, in order to preserve consistency. 
-
-Our approach is grounded on the logic \texttt{(un)SecureND}, including an explicit $trust$ function on formulas to guarantee consistency check at each retrieval step (after a $read$ function), before installation rights are granted for a package (by a $write$ function). The fragment of the language presented in this paper allows to express negation over trust, thereby expressing a dis-installation requirement. Different pairs of introduction/elimination rules determine the selection of one of tow resolution strategies: one flags a package external to the installation profile as distrusted and hence as not installable; the other identifies already installed packages to be removed. The selection takes care to identify and remove all required dependencies. We have illustrated the working protocol through an easy example. 
-
-Validation of the system is obtained by implementation of the \texttt{(un)SecureND} calculus as a large inductive type in the Coq proof assistant. The development is available at \url{https://github.com/gprimiero/SecureNDC}. It makes it possible to express and prove the lemmas and theorems from sections~\ref{sec:distrusted} and~\ref{sec:mistrusted}.
-
-A characteristic of the logic \texttt{(un)SecureND} is its substructural nature, which in future work can be exploited to investigate cases of strengthened and limited resource redundancy for fault tolerance and source shuffling for security. Other applications of negative trust can be investigated to distinguish between malevolent and simply unsuccessful sources.
-
-
-
-\bibliographystyle{plain}
-\bibliography{unsecureNDC}
-\end{document}

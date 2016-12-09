@@ -6,6 +6,14 @@ F{\'e}lix {G{\'o}mez M{\'a}rmol} and Gregorio {Mart{\'i}nez P{\'e}rez}.
   Vehicular Ad Hoc Networks}.
 \newblock {\em J. Netw. Comput. Appl.}, 35(3):934--941, May 2012.
 
+\bibitem{DBLP:conf/vtc/KonurF11}
+Savas Konur and Michael Fisher.
+\newblock {Formal Analysis of a {VANET} Congestion Control Protocol through
+  Probabilistic Verification}.
+\newblock In {\em {Proceedings of the 73rd {IEEE} Vehicular Technology
+  Conference, {VTC} Spring 2011, 15-18 May 2011, Budapest, Hungary}}, pages
+  1--5. {IEEE}, 2011.
+
 \bibitem{Lo2009}
 Nai-Wei Lo and Hsiao-Chien Tsai.
 \newblock {A Reputation System for Traffic Safety Event on Vehicular Ad Hoc
