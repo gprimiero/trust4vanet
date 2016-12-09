@@ -7,15 +7,15 @@ Repeated entry---line 176 of file unsecureNDC.bib
  : @inproceedings{primiero_secureND
  :                                 ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 1058 of file unsecureNDC.bib
+Repeated entry---line 1086 of file unsecureNDC.bib
  : @techreport{primiero_secureND
  :                              ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 1690 of file unsecureNDC.bib
+Repeated entry---line 1718 of file unsecureNDC.bib
  : @proceedings{DBLP:conf/pst/2014
  :                                ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 2746 of file unsecureNDC.bib
+Repeated entry---line 2774 of file unsecureNDC.bib
  : @book{restall
  :              ,
 I'm skipping whatever remains of this entry
@@ -25,45 +25,45 @@ Warning--I didn't find a database entry for "conf/infocom/2008"
 Warning--empty publisher in restall
 Warning--empty year in restall
 Warning--can't use both author and editor fields in Wei2012
-You've used 11 entries,
+You've used 14 entries,
             2118 wiz_defined-function locations,
-            586 strings with 7060 characters,
-and the built_in function-call counts, 4668 in all, are:
-= -- 462
-> -- 217
-< -- 7
-+ -- 82
-- -- 71
-* -- 337
-:= -- 731
-add.period$ -- 37
-call.type$ -- 11
-change.case$ -- 62
+            612 strings with 8187 characters,
+and the built_in function-call counts, 6234 in all, are:
+= -- 617
+> -- 305
+< -- 10
++ -- 115
+- -- 101
+* -- 461
+:= -- 973
+add.period$ -- 48
+call.type$ -- 14
+change.case$ -- 84
 chr.to.int$ -- 0
-cite$ -- 14
-duplicate$ -- 190
-empty$ -- 366
-format.name$ -- 71
-if$ -- 1016
+cite$ -- 17
+duplicate$ -- 248
+empty$ -- 477
+format.name$ -- 101
+if$ -- 1355
 int.to.chr$ -- 0
-int.to.str$ -- 11
-missing$ -- 13
-newline$ -- 57
-num.names$ -- 26
-pop$ -- 75
+int.to.str$ -- 14
+missing$ -- 16
+newline$ -- 72
+num.names$ -- 34
+pop$ -- 98
 preamble$ -- 1
-purify$ -- 53
+purify$ -- 72
 quote$ -- 0
-skip$ -- 144
+skip$ -- 189
 stack$ -- 0
-substring$ -- 308
-swap$ -- 69
-text.length$ -- 7
+substring$ -- 412
+swap$ -- 94
+text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 40
+type$ -- 52
 warning$ -- 3
-while$ -- 48
-width$ -- 13
-write$ -- 126
+while$ -- 63
+width$ -- 16
+write$ -- 162
 (There were 5 error messages)
