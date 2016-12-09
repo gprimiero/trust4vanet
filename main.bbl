@@ -1,5 +1,20 @@
 \begin{thebibliography}{10}
 
+\bibitem{DBLP:journals/ijaisc/ChaurasiaTV15}
+Brijesh~Kumar Chaurasia, Ranjeet~Singh Tomar, and Shekhar Verma.
+\newblock {Using trust for lightweight communication in VANETs}.
+\newblock {\em {IJAISC}}, 5(2):105--116, 2015.
+
+\bibitem{DBLP:conf/um/FinnsonZTMC12}
+John Finnson, Jie Zhang, Thomas~T. Tran, Umar~Farooq Minhas, and Robin Cohen.
+\newblock {A Framework for Modeling Trustworthiness of Users in Mobile
+  Vehicular Ad-Hoc Networks and Its Validation through Simulated Traffic Flow}.
+\newblock In Judith Masthoff, Bamshad Mobasher, Michel~C. Desmarais, and Roger
+  Nkambou, editors, {\em {User Modeling, Adaptation, and Personalization - 20th
+  International Conference, {UMAP} 2012, Montreal, Canada, July 16-20, 2012.
+  Proceedings}}, volume 7379 of {\em {Lecture Notes in Computer Science}},
+  pages 76--87. Springer, 2012.
+
 \bibitem{GomezMarmol:2012:TTR:2160992.2161100}
 F{\'e}lix {G{\'o}mez M{\'a}rmol} and Gregorio {Mart{\'i}nez P{\'e}rez}.
 \newblock {TRIP, a Trust and Reputation Infrastructure-based Proposal for
@@ -74,5 +89,13 @@ Yu-Chih Wei and Yi-Ming Chen.
 \newblock {\em {Reliability and Efficiency Improvement for Trust Management
   Model in VANETs}}, pages 105--112.
 \newblock Springer Netherlands, Dordrecht, 2012.
+
+\bibitem{DBLP:conf/vtc/WexBHLD08}
+Philipp Wex, Jochen Breuer, Albert Held, Tim Leinm{\"u}ller, and Luca
+  Delgrossi.
+\newblock {Trust Issues for Vehicular Ad Hoc Networks}.
+\newblock In {\em {Proceedings of the 67th {IEEE} Vehicular Technology
+  Conference, {VTC} Spring 2008, 11-14 May 2008, Singapore}}, pages 2800--2804.
+  {IEEE}, 2008.
 
 \end{thebibliography}
