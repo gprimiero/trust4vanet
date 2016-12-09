@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.8)  9 DEC 2016 16:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.8)  9 DEC 2016 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -395,9 +395,9 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 \myCenter3=\dimen162
 \myScoreEnd3=\dimen163
  [3]
-LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 454.
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 452.
  [4]
-Overfull \hbox (14.45784pt too wide) detected at line 505
+Overfull \hbox (14.45784pt too wide) detected at line 503
 []
  []
 
@@ -423,7 +423,7 @@ Here is how much of TeX's memory you used:
  7127 multiletter control sequences out of 15000+600000
  48276 words of font info for 108 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,8n,26p,1747b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,8n,26p,1748b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc
 }</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -448,7 +448,7 @@ xmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2015/texmf-dist
 ype1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/t
 imes/utmbi8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr
 8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 250894 bytes).
+Output written on main.pdf (6 pages, 250862 bytes).
 PDF statistics:
  120 PDF objects out of 1000 (max. 8388607)
  87 compressed objects within 1 object stream

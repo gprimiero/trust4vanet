@@ -219,7 +219,7 @@ The operational rules in Figure \ref{fig:system1} formulate compositionality of 
 
 \subsection{Access Rules}
 
-In Figure \ref{fig:system2} we present the access rules on messages. These allow an agent's profile to act on messages from a distinct agent. $\neg$-distribution expresses profile consistency: if an agent's profile does not allow inferring a message $\phi_{i,j}$, then it allows inferring any other message whose requirements do not include $\phi_{i,j}$. $\mathit{read}$ says that from any consistent profile a message can be read provided its requirements are satisfied (if any). $\mathit{trust}$ works as an elimination rule for $read$: it says that if a message is received and it preserves profile consistency, then it can be trusted. $\mathit{write}$ works as an elimination rule for $trust$: it says that a readable and trustable message can be broadcast. $\mathit{exec}$ says that every message consistently received by a profile is valid in it. The rule MTrust-I says that currently held message conflicting with a newly arrived message are mistrusted, i.e. removed from the current profile until none of its consequences are included; the corresponding MTrust-E elimination allows to trust any message consistent with the conflict resolution by removal of the mistrusted message in the user profile, including any required dependency, as expressed by the side condition that requires checking with any other agent who has higher reputation than the sender of the original message. The side condition can be modified at will, e.g. to design a protocol that will restore previous information if a sufficient number of other agents with higher reputation support it. \textit{mistrust} is a flag for facilitating removal of messages present in the user profile conflicting in view of incoming new information. 
+In Figure \ref{fig:system2} we present the access rules on messages. These allow an agent's profile to act on messages from a distinct agent. $\neg$-distribution expresses profile consistency: if an agent's profile does not allow inferring a message $\phi_{i,j}$, then it allows inferring any other message whose requirements do not include $\phi_{i,j}$. $\mathit{read}$ says that from any consistent profile a message can be read provided its requirements are satisfied (if any). $\mathit{trust}$ works as an elimination rule for $read$: it says that if a message is received and it preserves profile consistency, then it can be trusted. $\mathit{write}$ works as an elimination rule for $trust$: it says that a readable and trustable message can be broadcast. $\mathit{exec}$ says that every message consistently received by a profile is valid in it. The rule MTrust-I says that currently held message conflicting with a newly arrived message are mistrusted, i.e. removed from the current profile until none of its consequences are included; the corresponding MTrust-E elimination allows to trust any message consistent with the conflict resolution by removal of the mistrusted message in the user profile, including any required dependency, as expressed by the side condition that requires checking with any other agent who has higher reputation than the sender of the original message. The side condition can be modified at will, e.g., to design a protocol that will restore previous information if a sufficient number of other agents with higher reputation support it. \textit{mistrust} is a flag for facilitating removal of messages present in the user profile conflicting in view of incoming new information. 
 
 
 
@@ -307,14 +307,14 @@ In Figure \ref{fig:system2} we present the access rules on messages. These allow
 
 \subsection{Structural Rules}
 
-Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure \ref{fig:system3}. As a result the system qualifies as substructural, see e.g. \cite{restall}. Weakening is constrained by an instance of $trust$: it says that valid information is preserved under an agent's profile extension, assuming the latter is provably consistent and therefore no refresh is required. Contraction is constrained by preservation of ordering: it says that removing identical messages from  an agent's profile is admissible, with the constraint that the copy from the agent with higher reputation is preserved. Exchange is constrained by dependency: it says that reorder of messages is admissible if there is no involved dependency between them. Finally, the Cut rule expresses validity under profile extension: if a message $\phi_{i,j}$ is validly for agent $v_{i}$ and after messaging it to $v_{j}$ the latter can infer $\phi_{i,k}$, then $v_{i}$ can infer $\phi_{i,k}$ by setting a message protocol with $v_{j}$.
+Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure \ref{fig:system3}. As a result, the system qualifies as substructural, see for instance \cite{restall}. Weakening is constrained by an instance of $trust$: it says that valid information is preserved under an agent's profile extension, assuming the latter is provably consistent and therefore no refresh is required. Contraction is constrained by preservation of ordering: it says that removing identical messages from  an agent's profile is admissible, with the constraint that the copy from the agent with higher reputation is preserved. Exchange is constrained by dependency: it says that reorder of messages is admissible if there is no involved dependency between them. Finally, the Cut rule expresses validity under profile extension: if a message $\phi_{i,j}$ is validly for agent $v_{i}$ and after messaging it to $v_{j}$ the latter can infer $\phi_{i,k}$, then $v_{i}$ can infer $\phi_{i,k}$ by setting a message protocol with $v_{j}$.
 
 
 \begin{figure*}[t]
 	\begin{prooftree}
 		\AxiomC{$\Gamma^{v_{i}}\vdash_{\mathtt{s}}  \phi^{v_{i}}_{i,j}$}
 		\AxiomC{$\Gamma^{v_{i}}\vdash_{\mathtt{s'}}  Trust(\phi^{v_{j}}_{j,k})$}
-		\RightLabel{Weakening}
+		\RightLabel{Weakening}  
 		\BinaryInfC{$\Gamma^{v_{i}}; \phi^{v_{j}}_{j,k}\vdash_{\mathtt{max(s,s'}+1)}  \phi^{v_{i}}_{i,j}$}
 %	\end{prooftree}
 \DisplayProof
@@ -432,18 +432,16 @@ In Figure \ref{fig:mp}, we present an example derivation mimicking the message p
 
 \section{Reputation Model}\label{sec:reputation}
 
-In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across agents. Higher reputation is modelled by feedback aggregation. Our system integrates the elements of the main feedback 6-tuple function from \cite{glenford}. In particular, time is mimicked directly by derivation steps; context is embedded by the user profile; service and characteristics are modelled by messages. To model the set of feedback that a given agent provides with respect to a given message related to a service and characteristic, we will have to collect all formulas following receiving a message:
+In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across agents. Higher reputation is modelled by feedback aggregation. Our system integrates the elements of the main feedback 6-tuple function from \cite{glenford}. In particular, time is mimicked directly by derivation steps; context is embedded by the user profile; service and characteristics are modelled by messages. To model the set of feedback that a given agent provides with respect to a given message related to a service and characteristic, we will have to collect all formulae following receiving a message:
 
 \begin{definition}[Feedback Set]
 The feedback set of agent $v_{j}$ for a message $\phi^{v_{i}}_{i,j}$, for all $v_{j}, v_{i} \in \mathcal{A}$ is the set of formulas $\psi^{v_{j}}_{i,k}$ such that they agree with $\phi^{v_{i}}_{i,j}$ for the service identifier $i$ and are obtained by a derivation construed by a $read$ rule followed by a $\rightarrow I$ rule, i.e.
-
+%
 \[
 FS^{v_{j}}(\phi^{v_{i}}_{i,j})=\{ \psi^{v_{j}}_{i,k}\mid \Gamma^{v_{j}}
 \vdash_{\mathtt{s}}  Read(\phi^{v_{i}}_{i,j})\rightarrow \psi^{v_{j}}_{i,k}  \}
 \]
-
 \end{definition}
-
 
 By way of example, consider the following simple derivation, which induces $FS^{v_{k}}(m^{v_{i,j}}_{2,1})=\{m^{v_{k}}_{2,2}\}$: 
 
@@ -471,7 +469,7 @@ By way of example, consider the following simple derivation, which induces $FS^{
 
 \end{figure*}
 
-Notice that by construction this set includes only feedback to received messages that are consistent with the current user's profile. 
+Notice that, by construction, this set includes only feedback to received messages that are consistent with the current user's profile. 
 
 \begin{definition}[Agent's Perception]
 The perception of agent $v_{j}$ for a message $\phi^{v_{i}}_{i,j}$, for all $v_{j}, v_{i} \in \mathcal{A}$ is the sum of elements of the feedback set over that formula, weighted by the step of the derivation at which it is obtained: 
@@ -487,7 +485,7 @@ AP^{v_{j}}(\phi^{v_{i}}_{i,j})=\sum_{FS^{v_{i}}(\phi^{v_{j}}_{i,k})}(\mathtt{s}(
 Intuitively, the value of $\mathtt{s}$ at each step of each derivation leading to each formula in the feedback set of an agent to a given service and characteristic is summed up to provide a value that increases linearly to reflect a step value for a time function. The value of $AP^{v_{j}}(\phi^{v_{i}}_{i,j})$ will reflect the aggregation of all the feedback provided on each characteristics of a given service.  
 
 
-We can now generalize to the set of all feedback on a characteristic for a given service, remembering that these are given in a pre-order so that the position of the characteristic in that order is mapped into an integer:
+We can now generalise to the set of all feedback on a characteristic for a given service, remembering that these are given in a preorder so that the position of the characteristic in that order is mapped into an integer:
 
 
 \begin{definition}[Agent's Perception of Characteristic Set]
