@@ -17,17 +17,21 @@
 \begin{document}
 %opening
 \title{A Proof-theoretic Trust and Reputation Model for VANET}
-\author{Giuseppe Primiero}
+%\author{Giuseppe Primiero}
 %\institute{Department of Computer Science\\Middlesex University London\\United Kingdom}
 
 
-
+\author{\IEEEauthorblockN{Giuseppe Primiero, Franco Raimondi, Taolue Chen, Rajagopal Nagarajan}
+	\IEEEauthorblockA{Department of Computer Science\\
+		Middlesex University London\\
+		United Kingdom\\
+		Email: G.Primiero|F.Raimondi|T.Chen|R.Nagarajan@mdx.ac.uk}}
 
 
 \maketitle
 
 \begin{abstract}
-Vehicle Ad Hoc Networks (VANETs) are becoming an important part of intelligent transportation systems. In this context, security requirements need to rely on a combination of agents' reputation and trust relations over the messaging infrastructure in order to maintain a dynamic and safe behaviour evaluation. Ontologically grounded approaches seem to offer optimal coverage and semantic foundation but formal correctness of the model, resolution of contradictions and the safety of transitive operations within the infrastructure remain unaddressed, with potentially disastrous effects. In this paper we offer a proof-theoretical interpretation of such a reputation and trust model for VANET which allows for a formal verification through translation in the Coq proof assistant and which guarantees consistency of the messaging protocol and security of transitive transmissions.
+Vehicle Ad Hoc Networks (VANETs) are becoming an important part of intelligent transportation systems. In this context, security requirements need to rely on a combination of agents' reputation and trust relations over the messaging infrastructure in order to maintain a dynamic and safe behaviour evaluation. Formal correctness, resolution of contradictions and proven safety of transitive operations within the infrastructure remain currently unaddressed, with potentially disastrous effects. In this paper we offer a proof-theoretical interpretation of such a reputation and trust model for VANET which allows for a formal verification through translation in the Coq proof assistant and which guarantees consistency of the messaging protocol and security of transitive transmissions.
 \end{abstract}
 
 
@@ -433,7 +437,7 @@ In Figure \ref{fig:mp}, we present an example derivation mimicking the message p
 
 \section{Reputation Model}
 
-In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across agents. Higher reputation is modeled by feedback aggregation. Our system integrates the elements of the main feedback 6-tuple function from \cite{xxx}. In particular, time is mimicked directly by derivation steps (and not accounted in the present model); context is embedded by the user profile; service and characteristics are modelled by messages. To model the set of feedback that a given agent provides with respect to a given message related to a service and characteristic, we will have to collect all formulas following receiving a message:
+In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across agents. Higher reputation is modelled by feedback aggregation. Our system integrates the elements of the main feedback 6-tuple function from \cite{glenford}. In particular, time is mimicked directly by derivation steps; context is embedded by the user profile; service and characteristics are modelled by messages. To model the set of feedback that a given agent provides with respect to a given message related to a service and characteristic, we will have to collect all formulas following receiving a message:
 
 \begin{definition}[Feedback Set]
 The feedback set of agent $v_{j}$ for a message $\phi^{v_{i}}_{i,j}$, for all $v_{j}, v_{i} \in \mathcal{A}$ is the set of formulas $\psi^{v_{j}}_{i,k}$ such that they agree with $\phi^{v_{i}}_{i,j}$ for the service identifier $i$ and are obtained by a derivation construed by a $read$ rule followed by a $\rightarrow I$ rule, i.e.
@@ -493,7 +497,7 @@ We can now generalize to the set of all feedback on a characteristic for a given
 
 \begin{definition}[Agent's Perception of Characteristic Set]
 The perception of agent $v_{j}$ for a set of messages $\mathcal{M}^{\mathcal{A}}_{S_{i}}$ from agents in $\mathcal{A}$ about service $S_{i}$ 
-is the sum of elements of the feedback set over the messages received about that service, weighted by the steps of the derivation at which it is obtained and further by the value $\mathtt{r}(k)$ of the rank of characteristic $k$: 
+is the sum of elements of the feedback set over the messages received about that service, weighted by the steps of the derivation at which it is obtained and further by the value $\mathtt{r}(C_{k})$ of the rank of characteristic $k$: 
 
 
 \begin{displaymath}
@@ -513,6 +517,14 @@ Using the agent's perception of characteristic set, we can define the order of r
 \begin{definition}[Reputation]
 $\forall v_{i}, v_{j}\in \mathcal{V}, S_{i}\in \mathcal{S}, v_{i}\prec v_{j} \leftrightarrow AP^{v_{i}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})>AP^{v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})$.
 \end{definition}
+
+\section{Conclusions}
+
+In this paper we have formulated a proof-theory for trust and reputation in VANETs. Our language is modelled on the logic \texttt{(un)SecureND}, including an explicit $trust$ function on formulas to guarantee consistency check at each retrieval step (after a $read$ function), before forwarding is granted for a package (by a $write$ function). Forwarding is modelled in an opportunistic fashion, selecting receivers on the basis of their reputation ranking. Trust on forwarding also guarantees correctness on transitive transmissions. Moreover, reputation is used to implement the resolution protocol for restoring information after removing previously stored data.
+% Different pairs of introduction/elimination rules determine the selection of one of tow resolution strategies: one flags a package external to the installation profile as distrusted and hence as not installable; the other identifies already installed packages to be removed. The selection takes care to identify and remove all required dependencies. We have illustrated the working protocol through an easy example. 
+Validation of the system is obtained by implementation of the \texttt{(un)SecureND} calculus as a large inductive type in the Coq proof assistant. The development is available at \url{https://github.com/gprimiero/SecureNDC}. 
+%It makes it possible to express and prove the lemmas and theorems from sections~\ref{sec:distrusted} and~\ref{sec:mistrusted}.
+A characteristic of the logic \texttt{(un)SecureND} is its substructural nature, which in future work can be exploited to investigate cases of strengthened and limited resource redundancy for fault tolerance and source shuffling for security. Other applications of negative trust can be investigated to distinguish between malevolent and simply unsuccessful sources.
 
 
 \bibliographystyle{plain}
