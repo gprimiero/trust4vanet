@@ -6,6 +6,8 @@
 % \usepackage{amsart}
 \usepackage{bussproofs}
 \usepackage{url}
+\usepackage{listings}
+
 
 \newtheorem{definition}{Definition}
 %\newtheorem{proposition}{Proposition}
@@ -13,6 +15,42 @@
 \newtheorem{theorem}{Theorem}
 %\newtheorem{corollary}{Corollary}
 %\newtheorem{lemma}{Lemma}
+
+
+                       \lstset{ %
+                       	%backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+                       	%basicstyle=\normalfont\ttfamily,        % the size of the fonts that are used for the code
+                       	%basicstyle=\normalfont\footnotesize\ttfamily,        % the size of the fonts that are used for the code
+                       	aboveskip={-.4cm},
+                       	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+                       	%breaklines=true,                 % sets automatic line breaking
+                       	%captionpos=b,                    % sets the caption-position to bottom
+                       	commentstyle=\color{Plum},    % comment style
+                       	morecomment=[l]{--},
+                       	deletekeywords={exp,eq,values,return,room},            % if you want to delete keywords from the given language
+                       	escapeinside={(*}{*)},          % if you want to add LaTeX within your code
+                       	%extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+                       	%frame=single,                    % adds a frame around the code
+                       	%keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+                       	keywordstyle=\color{blue},       % keyword style
+                       	language=Java,                 % the language of the code
+                       	morekeywords={define,let,cond,if,struct},            % if you want to add more keywords to the set
+                      %	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+                       	%numbersep=5pt,                   % how far the line-numbers are from the code
+                       	numberstyle=\tiny\color{black}, % the style that is used for the line-numbers
+                       	%rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+                       	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+                       	showstringspaces=false,          % underline spaces within strings only
+                       	showtabs=false,                  % show tabs within strings adding particular underscores
+                       	%stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+                       	stringstyle=\color{OliveGreen},     % string literal style
+                       	tabsize=2,                       % sets default tabsize to 2 spaces
+                       	basicstyle=\ttfamily,columns=flexible,
+                       	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+                       	%numbers=left,
+                       	%basicstyle=\scriptsize,
+                       	%mathescape
+                       }
 
 \begin{document}
 %opening
@@ -366,7 +404,6 @@ Normalization justifies a safety property of our trust and reputation model over
 In Figure \ref{fig:handshake} we present an example derivation mimicking an handshaking protocol. Here Service 1 identifies the set of messages for this protocol. By Hello Message, a user $v_{i}$ with a well-defined profile with a `hello' message in its recognition service sends the message to the network;   a user $v_{k}$ reading the message and assuming it preserves consistency (e.g. there is no instruction in its profile to ingore messages from $v_{i}$), accepts it and forwards it further, including a `hello' back to $v_{i}$.
 
 
-
 \begin{figure*}
 	\begin{prooftree}
 		\AxiomC{$\Gamma^{v_{i}}:profile$}
@@ -426,6 +463,51 @@ In Figure \ref{fig:mp}, we present an example derivation mimicking the message p
 
 	\caption{The Message Passing Protocol}\label{fig:mp}
 \end{figure*}
+
+
+The full protocol with handshaking and opportunistic forwarding is formulated in Figure \ref{fig:routine1}.
+
+
+\begin{figure}[t]
+	\lstset{language=Java,
+	%	numbers=left,
+		basicstyle=\scriptsize,
+		mathescape}
+%	
+	\begin{lstlisting}[frame=single]  % Start your code-block
+	
+	PROCEDURE $\mathtt{Opportunistic Forwarding}(v_{i},v_{j})$
+	
+	FOR $(v_{i},v_{j},v_{k})\in \mathcal{A}$
+	    IF $v_{i} Write(HELLO)$ 
+	        THEN forall $v_{j}, v_{k} \in \mathcal{A}$, 
+				        $v_{j} Write(HELLO)$ AND $v_{k} Write(HELLO)$
+					       IF $v_{j}\prec v_{k}$ 
+						       THEN $v_{i},v_{j}$ 
+						       DO Handshaking
+						       ELSE $v_{i},v_{k}$
+						       DO Handshaking
+						    ENDIFELSE
+			ENDIF
+			
+			IF Handshaking($v_{i},v_{j}$)
+				THEN $v_{i} Write(S, C)$ AND $v_{j} Read(S,C)$ 
+							IF $v_{j} Trust(S,C)$
+								THEN $v_{j} Write(S,C)$
+								ELSE  $v_{j}MTrust (SC)$
+											IF forall $v_{i}\prec v_{j}$, $v_{i}Trust(SC)$
+												THEN $v_{j}Trust(SC)$
+												ELSE $v_{j}Trust(S,\neg C)$
+											ENDIFELSE
+								ENDIFELSE
+							ENDIF
+					ENDIF
+				
+		ENDFOR
+	ENDPROCEDURE
+	\end{lstlisting}
+	\caption{Algorithm Opportunistic Forwarding}\label{fig:routine1}
+\end{figure}
 
 
 
