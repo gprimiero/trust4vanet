@@ -2812,3 +2812,27 @@ Timestamp                = {2014.02.06}
 	year = "2012"
 }
 
+@inproceedings{glenford,
+	author = "Vanni, R and Jaimes, L.M.S. and Mapp, G. and Moreira, E.",
+	booktitle = "{AICT 2016, The Twelfth Advanced International Conference on Telecommunications }",
+	pages = "14--19",
+	publisher = "IARIA",
+	title = "{Ontology Driven Reputation Model for VANET}",
+	year = "2016"
+}
+
+@article{DBLP:journals/fac/KonurFDK14,
+	author = "Konur, Savas and Fisher, Michael and Dobson, Simon and Knox, Stephen",
+	bibsource = "dblp computer science bibliography, http://dblp.org",
+	biburl = "http://dblp.uni-trier.de/rec/bib/journals/fac/KonurFDK14",
+	doi = "10.1007/s00165-013-0277-4",
+	journal = "Formal Asp. Comput.",
+	number = "4",
+	pages = "677--694",
+	timestamp = "Tue, 01 Jul 2014 15:40:01 +0200",
+	title = "{Formal verification of a pervasive messaging system}",
+	url = "http://dx.doi.org/10.1007/s00165-013-0277-4",
+	volume = "26",
+	year = "2014"
+}
+
