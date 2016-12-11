@@ -117,8 +117,9 @@ $\mathcal{A}$ is the set of agents issuing messages and including vehicles $\mat
 To simplify notation, a message $\phi^{v_{i}}_{S_{k},C_{j}}$ is usually abbreviated as $\phi^{v_{i}}_{{k},{j}}$. $mode$ is a variable for reading, writing and trusting messages, closed under negation. An agent profile $\Gamma^{\mathcal{A}}$ is the current list of all messages collected by the agent either from other agents or from various available sensors and other networks. For the present purposes, the latter ones will be indexed at their first vehicle or RSU collecting it, so as not to add networks as separate agents.
 
 
+% FR minor point: changed index for agent i to differentiate it from service i
 \begin{definition}[Formulae]
-A formula $\Gamma^{v}_{i} \vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ states that a message $\phi$ about service $i$ and characteristic $k$ signed from agent $v_{j}$  is validly accessed at step $\mathtt{s}\geq 0$ under the profile of agent $v_{i}$.
+A formula $\Gamma^{v}_{l} \vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ states that a message $\phi$ about service $i$ and characteristic $k$ signed from agent $v_{j}$  is validly accessed at step $\mathtt{s}\geq 0$ under the profile of agent $v_{l}$.
 \end{definition}
 
 \begin{definition}[Validity]
@@ -401,7 +402,7 @@ Normalization justifies a safety property of our trust and reputation model over
 
 %\subsection{Handshaking Protocol}
 
-In Figure \ref{fig:handshake} we present an example derivation mimicking an handshaking protocol. Here Service 1 identifies the set of messages for this protocol. By Hello Message, a user $v_{i}$ with a well-defined profile with a `hello' message in its recognition service sends the message to the network;   a user $v_{k}$ reading the message and assuming it preserves consistency (e.g. there is no instruction in its profile to ingore messages from $v_{i}$), accepts it and forwards it further, including a `hello' back to $v_{i}$.
+In Figure \ref{fig:handshake} we present an example derivation for a simple handshaking protocol. Here Service 1 identifies the set of messages for this protocol. By Hello Message, a user $v_{i}$ with a well-defined profile with a `hello' message in its recognition service sends the message to the network;   a user $v_{k}$ reading the message and assuming it preserves consistency (e.g. there is no instruction in its profile to ingore messages from $v_{i}$), accepts it and forwards it further, including a `hello' back to $v_{i}$.
 
 
 \begin{figure*}
@@ -428,7 +429,7 @@ In Figure \ref{fig:handshake} we present an example derivation mimicking an hand
 
 %\subsection{Recipient Selection Protocol}
 
-In Figure \ref{fig:selection}, we present an example derivation mimicking the recipient selection protocol. Here the idea is as follows: after $v_{i}$ broadcasts a `hello' message, $v_{k}, v_{j}$ both receive and accept the message; at this stage a recipient is selected on the basis of the reputation order between $v_{k}$ and $v_{j}$, so that a new profile is built out of $v_{i}$ and the higher of the two recipients, thus mimicking a communication channel.
+In Figure \ref{fig:selection}, we present an example derivation of the recipient selection protocol. Here the idea is as follows: after $v_{i}$ broadcasts a `hello' message, both $v_{k}, v_{j}$ receive and accept the message; at this stage a recipient is selected on the basis of the reputation order between $v_{k}$ and $v_{j}$, so that a new profile is built out of $v_{i}$ and the higher of the two recipients, thus modelling a communication channel.
 
 
 \begin{figure*}
@@ -446,7 +447,7 @@ In Figure \ref{fig:selection}, we present an example derivation mimicking the re
 
 %\subsection{Message Passing Protocol}
 
-In Figure \ref{fig:mp}, we present an example derivation mimicking the message passing protocol (without mistrust). Here Service 2 is some service of any kind. By the first premise in MP, the Handshaking Protocol is guaranteed terminating, including the Recipient Selection protocol if required; $v_{k}$ then reads a message issued by $v_{i}$, checks for validity in its own profile through an application of $trust$, and if this check is passed the message is forwarded.
+In Figure \ref{fig:mp}, we present an example derivation modelling a message passing protocol (without mistrust). Here Service 2 is some service of any kind. By the first premise in MP, the Handshaking Protocol is guaranteed terminating, including the Recipient Selection protocol if required; $v_{k}$ then reads a message issued by $v_{i}$, checks for validity in its own profile through an application of $trust$, and if this check is passed the message is forwarded.
 
 
 
@@ -511,10 +512,9 @@ The full protocol with handshaking and opportunistic forwarding is formulated in
 
 
 
-
 \section{Reputation Model}\label{sec:reputation}
 
-In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across agents. Higher reputation is modelled by feedback aggregation. Our system integrates the elements of the main feedback 6-tuple function from \cite{glenford}. In particular, time is mimicked directly by derivation steps; context is embedded by the user profile; service and characteristics are modelled by messages. To model the set of feedback that a given agent provides with respect to a given message related to a service and characteristic, we will have to collect all formulae following receiving a message:
+In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across agents. Higher reputation is modelled by feedback aggregation. Our system integrates the elements of the main feedback 6-tuple function from \cite{glenford}. In particular, time is encoded directly by derivation steps; context is embedded by the user profile; service and characteristics are modelled by messages. To model the set of feedback that a given agent provides with respect to a given message related to a service and characteristic, we will have to collect all formulae following receiving a message:
 
 \begin{definition}[Feedback Set]
 The feedback set of agent $v_{j}$ for a message $\phi^{v_{i}}_{i,j}$, for all $v_{j}, v_{i} \in \mathcal{A}$ is the set of formulas $\psi^{v_{j}}_{i,k}$ such that they agree with $\phi^{v_{i}}_{i,j}$ for the service identifier $i$ and are obtained by a derivation construed by a $read$ rule followed by a $\rightarrow I$ rule, i.e.
