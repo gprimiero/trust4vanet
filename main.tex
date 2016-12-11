@@ -497,7 +497,7 @@ The full protocol with handshaking and opportunistic forwarding is formulated in
 								ELSE  $v_{j}MTrust (SC)$
 											IF forall $v_{i}\prec v_{j}$, $v_{i}Trust(SC)$
 												THEN $v_{j}Trust(SC)$
-												ELSE $v_{j}Trust(S,\neg C)$
+												ELSE $v_{j}\neg Trust(S, C)$
 											ENDIFELSE
 								ENDIFELSE
 							ENDIF
