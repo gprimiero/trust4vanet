@@ -101,10 +101,9 @@ $\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust
 	%
 	\begin{displaymath}
 	\begin{array}{l}
-	\mathcal{A}^{\prec}:= \{\mathcal{V, R}\}\\
+	\mathcal{A}^{\prec}:= \{\mathcal{V, R}\} \quad 
 	\mathcal{V}:= \{v_{1}\prec \cdots \prec v_{n}\}\\
-	\mathcal{R}:= \{rsu_{1}\prec\cdots \prec rsu_{m}\}\\
-	\mathcal{S}:= \{S_1, \dots, S_{n}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
+	\mathcal{R}:= \{rsu_{1}\prec\cdots \prec rsu_{m}\}\quad \mathcal{S}:= \{S_1, \dots, S_{n}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
 	\mathcal{C}:= \{C^{S_1}_{\overrightarrow{n}},  \dots, C^{S_{n}}_{\overrightarrow{n}}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
 	\phi^{\mathcal{A}}_{C^{S_{i}}_{j}}:= a^{\mathcal{A}}_{C^{S_{i}}_{j}}\mid \neg \phi^{\mathcal{A}}_{i,j}\mid \phi^{\mathcal{A}}_{i,j}\rightarrow \phi^{\mathcal{A}}_{k,l}\mid \phi^{\mathcal{A}}_{i,j}\wedge \phi^{\mathcal{A}}_{k,l}\\
 	\qquad \qquad \mid \phi^{\mathcal{A}}_{i,j}\vee \phi^{\mathcal{A}}_{k,l} \mid \bot \mid Read(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid\\ 
@@ -566,11 +565,9 @@ We can now generalise to the set of all feedback on a characteristic for a given
 
 \begin{definition}[Vehicle's Perception of Characteristic Set]
 The perception of vehicle $v_{j}$ for a set of messages $\mathcal{M}^{\mathcal{A}}_{S_{i},C_{k}}$ from other vehicles about characteristic $C_{k}$ of service $S_{i}$ is the sum of elements of the feedback set over the messages received about that service characteristic, weighted by the steps of the derivation at which it is obtained and further by the value $\mathtt{r}(C_{k})$ of the rank of characteristic $k$: 
-
-
+%
 \begin{displaymath}
 \begin{array}{l}
-
 AP^{v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})=\\
 \sum_{FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k})}
 (1-\mathtt{r}(C_{k})(\mathtt{s}(\psi^{v_{j}}_{i,k} \in FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k}))))
