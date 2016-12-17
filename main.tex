@@ -232,13 +232,13 @@ The operational rules in Figure \ref{fig:system1} formulate compositionality of 
 	\end{prooftree}
 	
 	\begin{prooftree}
-		\AxiomC{$\Gamma^{v_{i}}; \Gamma^{v_{j}}  \vdash_{\mathtt{s}}  \phi^{v_{i/j}}_{i,l/m}$}
+		\AxiomC{$\Gamma^{v_{i}}; \Gamma^{v_{j}}  \vdash_{\mathtt{s}}  \phi^{v_{i/j}}_{i,l}$}
 		\RightLabel{$\vee$-I}
-		\UnaryInfC{$\Gamma^{v_{i}}; \Gamma^{v_{j}}  \vdash_{\mathtt{s+1}}  \phi^{v_{i}}_{i,l} \vee \psi^{v_{j}}_{i,m}$}
+		\UnaryInfC{$\Gamma^{v_{i}}; \Gamma^{v_{j}}  \vdash_{\mathtt{s+1}} \phi^{v_{i/j}}_{i,l} \vee \psi^{v_{i/j}}_{i,m}$}
 		\DisplayProof
 		\quad
-		\AxiomC{$\Gamma^{v_{i}}; \Gamma^{v_{j}}  \vdash_{\mathtt{s}}  \phi^{v_{i}}_{i,l} \vee \psi^{v_{j}}_{i,m}$}
-		\AxiomC{$\psi^{v_{i/j}}_{i,l/m} \vdash_{\mathtt{s'}}  \xi^{v_{i/j}}_{k,n}$}
+		\AxiomC{$\Gamma^{v_{i}}; \Gamma^{v_{j}}  \vdash_{\mathtt{s}}  \phi^{v_{i/j}}_{i,l} \vee \psi^{v_{i/j}}_{i,m}$}
+		\AxiomC{$\phi/\psi^{v_{i/j}}_{i,l/m} \vdash_{\mathtt{s'}}  \xi^{v_{i/j}}_{k,n}$}
 		\RightLabel{$\vee$-E}
 		\BinaryInfC{$\Gamma^{v_{i}}; \Gamma^{v_{j}}  \vdash_{\mathtt{max(s,s')+1}}  \xi^{v_{i/j}}_{k,n}$}
 	\end{prooftree}
