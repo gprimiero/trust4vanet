@@ -423,7 +423,7 @@ PROCEDURE $\mathtt{Opportunistic Forwarding}(v_{i},v_{j})$
 	ENDIF
 			
 	IF Handshaking($v_{i},v_{k}$)
-		THEN $v_{i}$ $Write(\phi_{i,k})$ AND $v_{j}$ $Read(\phi_{i,k})$ 
+		THEN $v_{i}$ $Write(\phi_{i,k})$ AND $v_{k}$ $Read(\phi_{i,k})$ 
 					IF $v_{k}$ $Trust(\phi_{i,k})$
 					THEN $v_{k}$ $Write(\phi_{i,k})$
 					ELSE  $v_{k}$  $\neg Trust (\phi_{i,k})$
