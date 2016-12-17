@@ -277,7 +277,7 @@ In Figure \ref{fig:system2} we present the access rules on messages. These allow
 	\centering
 	\begin{prooftree}
 		\AxiomC{$\Gamma^{v_{i}}\vdash_{\mathtt{s}}  \neg \mathcal{O}(\psi^{v_{j}}_{i,l})$}
-		\RightLabel{$\mathcal{O}\in\{Read, Turst, Write\}, \neg$-distribution}
+		\RightLabel{$\mathcal{O}\in\{Read, Trust, Write\}, \neg$-distribution}
 		\UnaryInfC{$\Gamma^{v_{i}}\vdash_{\mathtt{s+1}}  \mathcal{O}(\neg \psi^{v_{j}}_{i,l})$}
 		\DisplayProof
 		\qquad
@@ -583,7 +583,8 @@ $\forall v_{i}, v_{j}\in \mathcal{V}, S_{i}\in \mathcal{S}, v_{i}\prec v_{j} \le
 
 \section{Conclusions}
 
-In this paper we have formulated a proof-theory for trust and reputation in VANETs. Our language is modelled on the logic \texttt{(un)SecureND}, including an explicit $trust$ function on formulas to guarantee consistency check at each retrieval step (after a $read$ function), before forwarding is granted for a package (by a $write$ function). Forwarding is modelled in an opportunistic fashion, selecting receivers on the basis of their reputation ranking. Trust on forwarding also guarantees correctness on transitive transmissions. Moreover, reputation is used to implement the resolution protocol for restoring information after removing previously stored data. Several improvements for the algorithm are possible, including majority selection on opportunistic forwarding (instead of consensus) and separate ordering for vehicles and RSUs. Several improvements for the algorithm are possible, including majority selection on opportunistic forwarding (instead of consensus) and separate ordering for vehicles and RSUs.
+In this paper we have formulated a proof-theory for trust and reputation in VANETs. Our language is modelled on the logic \texttt{(un)SecureND}, including an explicit $trust$ function on formulas to guarantee consistency check at each retrieval step (after a $read$ function), before forwarding is granted for a package (by a $write$ function). Forwarding is modelled in an opportunistic fashion, selecting receivers on the basis of their reputation ranking. Trust on forwarding also guarantees correctness on transitive transmissions. Moreover, reputation is used to implement the resolution protocol for restoring information after removing previously stored data. Several improvements for the algorithm are possible, including majority selection on opportunistic forwarding (instead of consensus) and separate ordering for vehicles and RSUs. 
+%Several improvements for the algorithm are possible, including majority selection on opportunistic forwarding (instead of consensus) and separate ordering for vehicles and RSUs.
 % Different pairs of introduction/elimination rules determine the selection of one of tow resolution strategies: one flags a package external to the installation profile as distrusted and hence as not installable; the other identifies already installed packages to be removed. The selection takes care to identify and remove all required dependencies. We have illustrated the working protocol through an easy example. 
 Validation of the system is obtained by implementation of the \texttt{(un)SecureND} calculus as a large inductive type in the Coq proof assistant. The development is available at \url{https://github.com/gprimiero/SecureNDC}. 
 %It makes it possible to express and prove the lemmas and theorems from sections~\ref{sec:distrusted} and~\ref{sec:mistrusted}.
