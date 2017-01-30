@@ -1,0 +1,186 @@
+
+----------------------- REVIEW 1 ---------------------
+PAPER: 6
+TITLE: A Proof-theoretic Trust and Reputation Model for VANET
+AUTHORS: Giuseppe Primiero, Franco Raimondi, Taolue Chen and Rajagopal Nagarajan
+
+Overall evaluation: 1
+
+----------- Overall evaluation -----------
+The paper addresses an interesting and relevant topic: a formal interpretration of model of reputation and trust in VANET, a component of intelligent transportation systems. Basing reputation and trust on formal foudnations is extremely important when safety considerations are involved, and this topic is understudied in the context of VANET. 
+
+However, the paper is extremely difficult to read, which makes it very difficult to assess the contribution and the correctness of the proposed constructions. It starts with a very confused presentation of the syntax of the framework. 
+
+
+For instance, two types of formulas are presented: first Boolean formulas are mentioned, which constitute messages. Then the notion of formulae is defined (Definition 2), meaning something else completely.
+
+
+[GP]
+----I am changing the term in Definition 2 to judgement to avoid the confusion
+
+
+Definitions 2 and 3 are not really definitions, but notations. 
+
+
+[GP]
+---is it not standard to introduce this notation by definition??
+
+The syntactic constructs on which the deduction system manipulates remain very unclear. For instance,  the use of ':profile' is never defined as part of the syntax. Is {}:profile a formula?  A Boolean formula (message)? This is not defined. 
+
+[GP]
+----added a sentence explaining that $:profile$ is a typing judgement. I have revised also the rules.
+
+
+
+Another point: the authors provide a deduction system for reasoning about trust and reputation. But how do we know it is useful, i.e., correctly describing reality? I would expect to have some soundness/completeness results included in the paper. If it is impossible to define semantics for the system - perhaps you could comment on this issue?
+
+
+
+[GP]
+------?????
+
+
+----------------------- REVIEW 2 ---------------------
+PAPER: 6
+TITLE: A Proof-theoretic Trust and Reputation Model for VANET
+AUTHORS: Giuseppe Primiero, Franco Raimondi, Taolue Chen and Rajagopal Nagarajan
+
+Overall evaluation: 1
+
+----------- Overall evaluation -----------
+The paper proposes a proof-theoretic model for assessing reputation and trust in vehicular ad-hoc networks.
+
+The paper fits in the topic of the workshop, in particular it considers trustworthiness and reputation properties which are
+related to both security and safety in the transportation domain.
+
+The proposal is original: it relies on a trust and reputation ontology-driven model proposed in literature, properly cited, and
+provides a proof-theoretic translation of such model to a natural deduction calculus called (un)SecureND.
+
+The main drawback of the paper is the presentation of the approach and the organization, as detailed in the following.
+
+- Since the approach is based on a previous work in the literature, a background on the contribution of the latter 
+should be included to make the paper self-contained.
+For example, the algorithm in section 3 is based on the the opportunistic forwarding decision process
+in [14] and the definitions in section 4 are related to the ones defined in the reputation model in [14] 
+
+
+[GP]
+------ The algorithm in Section 3 is explained and I do not believe it is hard to understand. I have rephrased the sentence preceding it. As for the Reputation model of Section 4, although it is an adaptation of [14], I believe it is self-contained: to make it easier to understand, I have started now the section with an informal explanation of the whole model.
+
+
+ 
+- The section 2 is very dense, especially to readers with no expertise in proof-theoretic semantics like this reviewer.
+In particular, for each set of rules used to define the model, a table is provided with all the rule definitions.
+Since the set of rules are also briefly explained in each subsection, this reviewer suggests to keep just one of the figures to
+illustrate the (un)SecureND calculus, and to exploit the space  to show how non-trustworthy interactions can be proven through
+a proof-checking method (as stated in the introduction) and to provide more details about how the model has been validated using
+the Coq library. 
+
+
+
+[GP]
+----????
+
+
+
+
+
+Minor comments
+++++++++++++++
+-pag. 1, col.2, line 11 from the bottom.
+“present” -> “presented”
+
+[GP]
+no
+
+
+-pag.2, col.1, comments to the definition 1.
+The set of vehicles is partially ordered? If so, please indicate it when introducing the notation.
+
+
+
+[GP]
+it is the reputation order, I have added one line.
+
+
+-pag.2, col.2, line 10 (order relation)
+“then v_i will be required…” —> “then v_j will be required” (? cf. definition 4)
+Moreover, can you provide some concrete examples of order between service characteristics?
+
+
+[GP]
+done
+
+-pag.3, col. 2, line 8:
+“validly” —> “valid”
+
+[GP]
+done
+
+-pag.4, col.2, line 4:
+“ingore” —> “ignore”
+
+[GP]
+done
+
+----------------------- REVIEW 3 ---------------------
+PAPER: 6
+TITLE: A Proof-theoretic Trust and Reputation Model for VANET
+AUTHORS: Giuseppe Primiero, Franco Raimondi, Taolue Chen and Rajagopal Nagarajan
+
+Overall evaluation: 0
+
+----------- Overall evaluation -----------
+This paper presents a novel approach to formal verification of trust and reputation in VANET communication. This approach is based on the natural deduction calculus (un)SecureND; proposed by the first two authors in previous publications. 
+The paper is very well motivated, and illustrates the application of the method with a realistic case. But I found the concepts introduced in Section 2 very difficult to grasp, which impaired my general understanding of the paper, and that is why I score it as borderline.
+
+In Section 2, many notions are discussed as self-evident, while in my opinion they are very specific to this work and need a more careful explanation.
+
+
+
+Examples:
+i) "(...) introduced in [10] for the positive fragment, and in [9] for the negation complete extension". What is positive fragment? what is negation complete extension?
+
+
+[GP]
+rephrased to help
+
+
+ii) Services and Service characteristics are never defined. No illustrative example is given. So all the subsequent discussion about order, identifiers, set of messages and vehicle-generated services cannot be understood.
+
+
+[GP]
+entered list of examples of services in introduction
+
+
+
+iii) What does it mean that "a vehicle profile \Gamma^v_i might validate a message (...)?" What does message validation represent here?
+
+ 
+[GP]
+rephrased
+
+
+iv) "A valid vehicle profile meets all the requirements and conflicts causes of all service messages that the user collects" Which user? what is a "conflict cause"? how requirements and conflict causes are met?
+
+
+[GP]
+Added phrase
+
+
+v) What is an "installation profile"?
+
+
+[GP]
+error, fixed
+
+
+Without examples or more detailed explanations, all these concepts are very fuzzy.
+
+Additionally, the concept of "transitive operation" or "transitive message passing operation" is mentioned in the Intro, but from the context  it is not clear what this means.
+
+[GP]
+added small edit
+
+
+The examples and rules given in Section 3 and 4 kind of compensate this lack of information and by the end of the paper, the reader understands the motivation and benefits of the presented method. But Section 2 needs to be re-worked, in my opinion.

@@ -68,13 +68,15 @@
 \maketitle
 
 \begin{abstract}
-Vehicle Ad Hoc Networks (VANETs) are becoming an important part of intelligent transportation systems. In this context, security requirements need to rely on a combination of vehicles' reputation and trust relations over the messaging infrastructure, in order to maintain a dynamic and safe behaviour evaluation. Formal correctness, resolution of contradictions, as well as proven safety of transitive operations in the presence of reputation and trust within the infrastructure, remain mostly unexplored issues with potentially disastrous effects. In this paper we provide a proof-theoretic interpretation of a reputation and trust model for VANET, which allows for formal verification through a translation into the Coq proof assistant, and which guarantees consistency of messaging protocols and security of transitive transmissions.
+Vehicular Ad Hoc Networks (VANETs) are an important component of intelligent transportation systems which are set to become part of global transportation infrastructure in the near future. In the context of such networks, security requirements need to rely on a combination of reputation of communicating agents and trust relations over the messaging framework. This is crucial in order to maintain dynamic and safe behaviour under all circumstances. Formal correctness, resolution of contradictions and proven safety of transitive operations in the presence of reputation and trust within the infrastructure remain mostly unexplored issues. This could lead to potentially disastrous situations, putting lives at risk. In this paper we provide a proof-theoretic interpretation of a reputation and trust model for VANET. This allows for formal verification through translation into the Coq proof assistant, and can guarantee consistency of messaging protocols and security of transitive transmissions.
 \end{abstract}
 
 
 \section{Introduction}\label{sec:intro}
 
-Vehicle Ad Hoc Networks (VANETs) consist of vehicles and roadside units networks created to enhance transportation systems through vehicle-to-vehicle (V2V) and vehicle-to-infrastructure (V2I) communications. Due to their distributed and dynamic nature, such networks are open to several types of threats, including false message propagation. Trust and reputation are among the  most used concepts to ensure integrity, reliability and safety of services. Several methods have been implemented in VANETs to manage trust, see \cite{Soleymani2015} for a recent overview. Trust models in VANETs differ in accordance to the main object of the model: entity-centric \cite{5641621, GomezMarmol:2012:TTR:2160992.2161100}, data-centric \cite{conf/infocom/RayaPGH08, Lo2009} and combined \cite{Wei2012}. Among the models that combine trust and reputation, the work in~\cite{glenford} gives an analysis that accounts for reputation as a characteristic of message forwarding, as well as vehicles, drivers and other agents: here reputation is therefore based on a descriptive ontology of the model and is used to provide feedback in the system. An overview of the issues related to the trust in fixed and mobile ad hoc networks is given in \cite{DBLP:conf/vtc/WexBHLD08}, while other approaches for trustworthiness and reputation in ad hoc mobile networks are presented, for example, in \cite{DBLP:conf/um/FinnsonZTMC12, DBLP:journals/ijaisc/ChaurasiaTV15}.
+Vehicular Ad Hoc Networks (VANETs) consist of vehicles and roadside units networks created to enhance transportation systems through vehicle-to-vehicle (V2V) and vehicle-to-infrastructure (V2I) communications. VANET services include: vehicle and road safety services, targeting characteristics like the decrease of traffic accidents and loss of life to vehicle occupants; traffic efficiency and management services, aiming to improve traffic flow, traffic coordination, and to provide local and map information; information and entertainment services, to provide multimedia data transfer and global Internet access, \cite{6849111}. 
+
+Due to their distributed and dynamic nature, such networks are open to several types of threats, including false message propagation. Trust and reputation are among the  most used concepts to ensure integrity, reliability and safety of services. Several methods have been implemented in VANETs to manage trust, see \cite{Soleymani2015} for a recent overview. Trust models in VANETs differ in accordance to the main object of the model: entity-centric \cite{5641621, GomezMarmol:2012:TTR:2160992.2161100}, data-centric \cite{conf/infocom/RayaPGH08, Lo2009} and combined \cite{Wei2012}. The work in~\cite{glenford} offers an analysis that accounts for reputation as a characteristic of message forwarding among vehicles, drivers and other agents: reputation of these agents is based on a descriptive ontology and is used to provide feedback in the system. An overview of the issues related to the trust in fixed and mobile ad hoc networks is given in \cite{DBLP:conf/vtc/WexBHLD08}, while other approaches for trustworthiness and reputation in ad hoc mobile networks are presented, for example, in \cite{DBLP:conf/um/FinnsonZTMC12, DBLP:journals/ijaisc/ChaurasiaTV15}.
 
 In most of these models, the analysis relies on simulations. Yet, such
 simulations cannot guarantee the absence of unpredictable and unsafe
@@ -84,7 +86,7 @@ safety control is through formal verification, but unfortunately none of the
 current trust and reputation models seem to have focused on a formal
 correctness requirement to ensure that the protocols are checkable. Formal
 approaches to VANET include the work in \cite{DBLP:conf/vtc/KonurF11} for
-the verification of a congestion control protocol using the model checker PRISM to investigate its correctness and effectiveness; privacy and authentication are verified using the AVISPA tool in~\cite{bouassida2011authentication}, while the TESLA authentication protocol is verified in~\cite{tesla-cpn} using Petri nets.  None of these (few) approaches focus explicitly on trust or reputation and they are all based on model checking. Other formal verification techniques like theorem proving seem to have been ignored so far. Moreover, an additional problem, i.e., ensuring that safety is preserved over transitive operations, remains unexplored.
+the verification of a congestion control protocol using the model checker PRISM to investigate its correctness and effectiveness; privacy and authentication are verified using the AVISPA tool in~\cite{bouassida2011authentication}, while the TESLA authentication protocol is verified in~\cite{tesla-cpn} using Petri nets.  None of these (few) approaches focus explicitly on trust or reputation and they are all based on model checking. Other formal verification techniques like theorem proving seem to have been ignored so far. Moreover, an additional problem, i.e., ensuring that safety is preserved over transitive operations, remains unexplored. In particular, the problem of a message passing over from vehicle $v_{i}$ to $v_{j}$ and from this to $v_{k}$ illustrate the need to guarantee that for each such transition security and safety properties are preserved.
 
 The present paper provides a solution to both problems mentioned above. In Section \ref{sec:logic} we formulate a proof-theoretic translation of the trust and reputation model for VANET given in \cite{glenford} into an extension of the natural deduction calculus \texttt{(un)SecureND} from \cite{DBLP:conf/ifiptm/Primiero16}. The aim is, first of all, to show that the trust properties instantiated through our calculus faithfully reflect those in a VANET network; accordingly, we show how non-trustworthy interactions can be proven to be so through a proof-checking method. On a higher level, the model offered by \texttt{(un)SecureND} has been proven formally correct through its translation to a Coq library. As such, the present translation guarantees a similar property for the whole VANET model. Thanks to the structural properties of our calculus, we show how transitive message passing operations, in the form of instances of a cut rule, are guaranteed safe via applying a normalization result. In Section \ref{sec:opportunistic} we illustrate protocols for handshaking, recipient selection and message passing based on reputation. In Section \ref{sec:reputation} we give a reputation model based on an evaluation of feedback messages parametrized, in view of a temporal measure and a ranking of the relevant service characteristic of the message.
 
@@ -94,20 +96,22 @@ The present paper provides a solution to both problems mentioned above. In Secti
 
 \section{\texttt{(un)SecureND}}\label{sec:logic}
 
-$\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust and distrust protocols introduced in \cite{primiero_secureND} for the positive fragment,  and in \cite{DBLP:conf/ifiptm/Primiero16} for the negation complete extension. Here we provide  a slightly modified version adapted for a VANET network. In particular, the present version introduces: contexts as sets of sets; formulas with multiple indices to account for service and message numbers; ranking on service characteristics. We start with introducing the language of our logic:
+Recall that 
+
+$\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust and distrust protocols introduced in \cite{primiero_secureND} and extended in \cite{DBLP:conf/ifiptm/Primiero16} with a negation connective. Here we provide a slightly modified version adapted for a VANET network. In particular, in the present version we introduce: contexts as sets of sets; formulas with multiple indices to account for service and message numbers; ranking on service characteristics. We start with introducing the language of our logic:
 
 \begin{definition}[Syntax of $\mathtt{(un)SecureND}$]\label{def:syntax} %The syntax  is defined by the following alphabet:
 	%
 	\begin{displaymath}
 	\begin{array}{l}
-	\mathcal{A}^{\prec}:= \{\mathcal{V, R}\} \quad 
+	\mathcal{A}^{\prec}:= \{\mathcal{V, R}\}\\
 	\mathcal{V}:= \{v_{1}\prec \cdots \prec v_{n}\}\\
-	\mathcal{R}:= \{rsu_{1}\prec\cdots \prec rsu_{m}\}\quad \mathcal{S}:= \{S_1, \dots, S_{n}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
+	\mathcal{R}:= \{rsu_{1}\prec\cdots \prec rsu_{m}\}\\
+	\mathcal{S}:= \{S_1, \dots, S_{n}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
 	\mathcal{C}:= \{C^{S_1}_{\overrightarrow{n}},  \dots, C^{S_{n}}_{\overrightarrow{n}}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
 	\phi^{\mathcal{A}}_{C^{S_{i}}_{j}}:= a^{\mathcal{A}}_{C^{S_{i}}_{j}}\mid \neg \phi^{\mathcal{A}}_{i,j}\mid \phi^{\mathcal{A}}_{i,j}\rightarrow \phi^{\mathcal{A}}_{k,l}\mid \phi^{\mathcal{A}}_{i,j}\wedge \phi^{\mathcal{A}}_{k,l}\\
 	\qquad \qquad \mid \phi^{\mathcal{A}}_{i,j}\vee \phi^{\mathcal{A}}_{k,l} \mid \bot \mid Read(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid\\ 
 	\qquad \qquad Write(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid Trust(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\\
-%	RES:= \mathcal{M}^{\mathcal{A}}\mid mode\mid \neg RES\\
 	\Gamma^{\mathcal{A}}:= 
 	%\{\{\phi^{\mathcal{A}}_{i,j}, \dots, \phi^{\mathcal{A}}_{i,k}\}, \dots, \{\phi^{\mathcal{A}}_{j,l}, \dots, \phi^{\mathcal{A}}_{j,m}\}\}
 	\phi^{\mathcal{A}}_{i,j} \mid \phi^{\mathcal{A}}_{i,j} < \phi^{\mathcal{A}}_{k,l} \mid \Gamma^{\mathcal{A}}; \phi^{\mathcal{A}}_{i,j}
@@ -119,21 +123,21 @@ $\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust
 %
 
 %\subsection{Services, Messaging and Protocols}
-$\mathcal{A}$ is the set of agents issuing messages and including vehicles $\mathcal{V}$ and roadside units (RSUs) $\mathcal{R}$. Below we will focus in particular on V2V communication, without loss of generality. $\mathcal{S}$ denotes a set of services. $\mathcal{C}$ denotes a set of service characteristics, with each element $C^{S_i}_{\overrightarrow{n}}$ denoting the set of $n$ characteristics of service $S_{i}$. We assume, here and throughout, that characteristics $C^{S_i}_{\overrightarrow{n}}$ of services for each service $S_i$ is associated with an order $\leq$, so are given as \emph{posets}, and the ordering $\leq$ is used to order messages below in Definition \ref{def:dependencypackages}. (Note that for two characteristics from $C^{S_i}_{\overrightarrow{n}}$ and $C^{S_j}_{\overrightarrow{n}}$ respectively with $i\neq j$, there is no order between  these two characteristics.)
+$\mathcal{A}$ is the set of agents issuing messages and including vehicles $\mathcal{V}$ and roadside units (RSUs) $\mathcal{R}$. Below we will focus in particular on V2V communication, without loss of generality. The order $\prec$ between agents is a reputation order, defined below in Section \ref{sec:reputation}. $\mathcal{S}$ denotes a set of services. $\mathcal{C}$ denotes a set of service characteristics, with each element $C^{S_i}_{\overrightarrow{n}}$ denoting the set of $n$ characteristics of service $S_{i}$. We assume, here and throughout, that characteristics $C^{S_i}_{\overrightarrow{n}}$ of services for each service $S_i$ is associated with an order $\leq$, so are given as \emph{posets}, and the ordering $\leq$ is used to order messages below in Definition \ref{def:dependencypackages}. Note that for two characteristics from $C^{S_i}_{\overrightarrow{n}}$ and $C^{S_j}_{\overrightarrow{n}}$ respectively with $i\neq j$, there is no order between  these two characteristics.
 
 
 Messages are boolean formulae, closed under connectives and including $\bot$ to express conflicts. Messages are signed by agents generating them and by service and characteristic identifiers: $\phi^{v_{i}}_{C^{S_{k}}_{j}}$ expresses a  message $\phi$ about characteristic $C_j$ of service $S_k$  generated by vehicle $v_{i}$.  To simplify, we often abbreviate this notation as $\phi^{v_{i}}_{k,j}$.  When required, we will refer to a \textit{set of messages} about service $S_{k}$ and characteristic $C_{j}$ from vehicle $v_{i}$ as $\mathcal{M}^{v_{i}}_{S_{k}, C_{j}}$; this notation can be further generalised to a whole set of vehicles $\{v_{i}, \dots, v_{k}\} \subseteq  \mathcal{A}$. 
 %
 % $mode$ is a variable for reading, writing and trusting messages, closed under negation. 
-A profile for vehicle $v_{i}$, denoted as $\Gamma^{v_{i}}$ is the current list of all messages collected by $v_{i}$ from available sensors, other agents and networks. For the present purposes, information from networks will be indexed at their first receiving vehicle, so as not to add networks as separate agents. For example, a vehicle profile $\Gamma^{v_{i}}$ might validate a message $\phi_{j,k}$ about service $S_{j}=\mathtt{weather}$ and characteristic $C_{k}=\mathtt{temperature}$ stating $\phi= (temp \geq 5^\circ C)$.
+A profile for vehicle $v_{i}$, denoted as $\Gamma^{v_{i}}$ is the current list of all messages collected by $v_{i}$ from available sensors, other agents and networks. For the present purposes, information from networks will be indexed at their first receiving vehicle, so as not to add networks as separate agents. For example, a vehicle profile $\Gamma^{v_{i}}$ receives a message $\phi_{j,k}$ about service $S_{j}=\mathtt{weather}$ and characteristic $C_{k}=\mathtt{temperature}$ stating $\phi= (temp \geq 5^\circ C)$. We can now define the notion of judgement in the language:
 
 
-\begin{definition}[Formulae]
-A formula $\Gamma^{v_l} \vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ states that a message $\phi$ about service $i$ and characteristic $k$ signed from agent $v_{j}$  is validly accessed at step $\mathtt{s}\geq 0$ under the profile of agent $v_{l}$.
+\begin{definition}[Judgements]
+A judgement $\Gamma^{v_l} \vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ states that a message $\phi$ about service $i$ and characteristic $k$ signed from agent $v_{j}$  is validly accessed at step $\mathtt{s}\geq 0$ under the profile of agent $v_{l}$.
 \end{definition}
 
 \begin{definition}[Validity]
-A formula $\vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ says that a message $\phi$  about service $i$ and characteristic $k$ signed from vehicle $v_{j}$ holds for \textit{any} vehicle's profile at step $\mathtt{s}$.
+A judgement $\vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ says that a message $\phi$  about service $i$ and characteristic $k$ signed from vehicle $v_{j}$ holds for \textit{any} vehicle's profile at step $\mathtt{s}$.
 \end{definition}
 
 Messages satisfy a ranking based on characteristics:
@@ -144,25 +148,9 @@ We define an order $<$ between messages such that $\phi^{v_{j}}_{i,k}<\phi^{v_{j
 %says that for agent $v_{j}$ the characteristic $k$ of service $i$ is more important or essential than characteristic $l$ for the same service; then $\phi^{v_{j}}_{i,k} \vdash_{\mathtt{s}}  \phi^{v_{j}}_{i,l}$.
 \end{definition}
 
-The order relation $\leq$ between service characteristics induces therefore validity under profile: if a characteristic $k$ is essential to another characteristic $l$ with respect to a service $i$ for a vehicle $v_{j}$, then $v_i$ will be required to obtain a value for  $i$ in order to validly access a value for $l$. 
+The order relation $\leq$ between service characteristics induces therefore validity under profile: if a characteristic $k$ is essential to another characteristic $l$ with respect to a service $i$ for a vehicle $v_{j}$, then $v_j$ will be required to obtain a value for  $k$ in order to validly access a value for $l$. An example of such order between characteristics could be as follows: under the service $\mathtt{weather}$, $C_{k}=\mathtt{humidity}$ and $C_{l}=\mathtt{precipitation-prevision}$, where the former characteristic is essential to determine the latter.
 
-%This order relation between service characteristics can then be lifted at the level of services. A partial order relation $\leq$ over $\mathcal{S}\times \mathcal{S}$ intuitively expresses that an order is satisfied across services: 
-%$S\leq S'$ means that repository $S$ contains a package that satisfies a dependency for a package in $S'$
-%
-%\begin{definition}\label{def:orderrepos}
-%	$S_{i}\leq S_{j}$  iff $\exists \phi^{v_{j}}_{i,k},\phi^{v_{j}}_{j,l}\ s.t.\ \phi^{v_{j}}_{i,k}<\phi^{v_{j}}_{j,l}$.
-%\end{definition}
-%By the first clause in Definition \ref{def:orderrepos}, 
-%$S_{i}< S_{j}$ means therefore that a service $S_{i}$ is essential for a service $S_{j}$ if there is a message concerning a characteristic of the latter which requires a message about a characteristic of the former. 
-%The condition for $\leq$ is satisfied by a dependency relation $\phi_{i}^{A}<\phi_{j}^{A}$ between two packages in the same repository $A$. 
-%The partial order allows for branching in the hierarchy, so that e.g. $S_{i}<S_{j}<S_{k}$ and $S_{i}<S_{j}<S_{l}$,  i.e. packages in $S_{k},S_{l}$  both require service $S_{j}$ and transitively $S_{i}$, but they have no requirement from each other. 
-%By the second clause in Definition \ref{def:orderrepos}, our order relation abstracts from the issue of reciprocal dependencies. As noted in~\cite{DBLP:journals/eceasst/Boender11}, two packages that mutually depend on each other will either be installed together, or not installed at all. They can therefore be considered as a single package for dependency resolution purposes. 
-
-
-A valid vehicle profile meets all the requirements and conflicts clauses of all service messages that the user collects.
-%Context $\Gamma^{A}$ formalises a list of formulae describing an installation profile with packages from repository $A$, ordered by the dependency relation holding between relevant packages in $A$. 
-%An installation profile can be extended by packages obtained by the same repository, denoted by $\Gamma^{A}, \phi^{A}$. 
-Rules from Figure \ref{fig:system0} define vehicle's profile construction from service messages requirements. By Empty Profile, a user profile can be empty (base case); by Message Insertion, the elements in an installation profile are messages; by Requirement Insertion, a profile can be extended by satisfied service requirements; by Profile Extension, if a message holds in an empty profile, it can be added to an existing profile. In this syntax, the construction of two vehicles profiles $\Gamma^{v_{i}}; \Gamma^{v_{j}}: profile$ will typically denote the existence of an active communication channel between vehicles $v_{i}, v_{j}$.
+A valid vehicle profile meets all the requirements and conflicts clauses of all service messages that the vehicle receives. A conflict is generated by two contradictory messages, and the profile is valid when such conflicts are avoided; a requirement is the need of a given value for some service and requirement, and a valid profile contains all such required values. We use $profile$ as a typing term to denote a for sets of formulas valid for a vehicle. Profile construction by service messages requirements is defined by rules from Figure \ref{fig:system0}. We start by declaring an empty profile valid (base case); by Message Insertion, a valid message can be inserted in a vehicle profile; by Requirement Insertion, a profile can be extended by satisfied service requirements; by Profile Extension, if a message holds in an empty profile, it can be added to an existing profile. In this syntax, the construction of two vehicles profiles $\Gamma^{v_{i}}; \Gamma^{v_{j}}: profile$ will typically denote the existence of an active communication channel between vehicles $v_{i}, v_{j}$.
 
 \begin{figure*}[h]
 	\begin{prooftree}
@@ -171,7 +159,7 @@ Rules from Figure \ref{fig:system0} define vehicle's profile construction from s
 		\UnaryInfC{$\{\}: profile$}
 		\DisplayProof
 		\qquad
-		\AxiomC{$\phi^{v_{j}}_{i,k} \!:\!\mathcal{M}^{v_{j}}$}
+		\AxiomC{$\vdash \phi^{v_{j}}_{i,k}$}
 		\RightLabel{Message Insertion}
 		\UnaryInfC{$ \phi^{v_{j}}_{i,k} \!:\!profile$}
 	\end{prooftree}
@@ -344,7 +332,7 @@ In Figure \ref{fig:system2} we present the access rules on messages. These allow
 
 \subsection{Structural Rules}
 
-Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure \ref{fig:system3}. As a result, the system qualifies as substructural, see for instance \cite{restall}. Weakening is constrained by an instance of $trust$: it says that valid information is preserved under a vehicle's profile extension, assuming the latter is provably consistent. Contraction is constrained by preservation of ordering: it says that removing identical messages from  a vehicle's profile is admissible, with the constraint that the copy from the vehicle with higher reputation is preserved. Exchange is constrained by dependency: it says that reorder of messages is admissible if there is no involved dependency between them. Finally, the Cut rule expresses validity under a vehicle's profile extension: if a message $\phi_{i,j}$ is validly for vehicle $v_{i}$ and after messaging it to $v_{j}$ the latter can infer $\phi_{i,k}$, then $v_{i}$ can infer $\phi_{i,k}$ by setting a message protocol with $v_{j}$.
+Structural rules hold with restrictions for $\mathtt{(un)SecureND}$, see Figure \ref{fig:system3}. As a result, the system qualifies as substructural, see for instance \cite{restall}. Weakening is constrained by an instance of $trust$: it says that valid information is preserved under a vehicle's profile extension, assuming the latter is provably consistent. Contraction is constrained by preservation of ordering: it says that removing identical messages from  a vehicle's profile is admissible, with the constraint that the copy from the vehicle with higher reputation is preserved. Exchange is constrained by dependency: it says that reorder of messages is admissible if there is no involved dependency between them. Finally, the Cut rule expresses validity under a vehicle's profile extension: if a message $\phi_{i,j}$ is valid for vehicle $v_{i}$ and after messaging it to $v_{j}$ the latter can infer $\phi_{i,k}$, then $v_{i}$ can infer $\phi_{i,k}$ by setting a message protocol with $v_{j}$.
 
 
 \begin{figure*}[t]
@@ -401,7 +389,7 @@ Normalization justifies a safety property of our trust and reputation model over
 %\subsection{Handshaking Protocol}
 
 
-In this section we present the algorithm and exemplify derivations for handshaking and opportunistic message forwarding protocols. The algorithm consists of two parts: it first implements the recipient selection of a communication by reputation and then the message forwarding if consistency is guaranteed by trust. The pseudo-code of the full protocol with handshaking and opportunistic forwarding is formulated in Figure \ref{fig:routine1}. Here we use protocol operations named after the relevant $\mathtt{SecureND}$ rules, as well as symbols for vehicles, services and characteristics.
+In this section we present the algorithm and exemplify derivations for handshaking and opportunistic message forwarding protocols. The algorithm consists of two parts: it first select a recipient for the communication according to a reputation model; then it implements message forwarding if consistency is guaranteed by trust. The pseudo-code of the full protocol with handshaking and opportunistic forwarding is formulated in Figure \ref{fig:routine1}. Here we use protocol operations named after the relevant $\mathtt{SecureND}$ rules, as well as symbols for vehicles, services and characteristics.
 
 
 \begin{figure}[t]
@@ -439,7 +427,7 @@ ENDPROCEDURE
 
 
 
-In Figure \ref{fig:handshake} we present the \texttt{SecureND} translation of the handshaking protocol. Here Service 1 identifies the set of messages for this protocol. By Hello Message, a user $v_{i}$ with a well-defined profile with a `hello' message in its recognition service sends the message to the network;   a user $v_{k}$ reading the message and assuming it preserves consistency (e.g. there is no instruction in its profile to ingore messages from $v_{i}$), accepts it and forwards it further, including a `hello' back to $v_{i}$.
+In Figure \ref{fig:handshake} we present the \texttt{SecureND} translation of the handshaking protocol. Here Service 1 identifies the set of messages for this protocol. By Hello Message, a user $v_{i}$ with a well-defined profile with a `hello' message in its recognition service sends the message to the network;   a user $v_{k}$ reading the message and assuming it preserves consistency (e.g. there is no instruction in its profile to ignore messages from $v_{i}$), accepts it and forwards it further, including a `hello' back to $v_{i}$.
 
 
 \begin{figure*}
@@ -506,7 +494,9 @@ In Figure \ref{fig:mp}, we present an example derivation modelling a message pas
 
 \section{Reputation Model}\label{sec:reputation}
 
-In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across vehicles. Higher reputation is modelled by feedback aggregation. Our system integrates the elements of the main feedback 6-tuple function from \cite{glenford}. In particular, time is encoded directly by derivation steps; context is embedded by the user profile; service and characteristics are modelled by messages. To model the set of feedback that a given vehicle provides with respect to a given message related to a service and characteristic, we will have to collect all formulae following receiving a message:
+In this section we illustrate the definition of the order relation $\prec$ to formalise the reputation model across vehicles, implementing the system in \cite{glenford}. The main idea of the model is the following. First, for any given message related to a service and a characteristic received from another agent (either vehicle or RSU), a vehicle will collect all the formulas that follow from accepting it, assuming each is consistent with the current profile. This is called the Feedback Set of an agent with respect to a message. Given all elements in this Feedback Set, the vehicle weights them by the time they are received, so that the later the message, the more relevant the reaction to it. In our system, time is encoded directly by derivation steps. This is called the Vehicle's Perception with respect to a message. Next, this value is generalised to a whole set of messages concerning a service and a characteristic, by further weighting each message by the relevance of the characteristic of interest, so that the higher this value the least urgent the message. We call this generalised value the Vehicle's Perception of a Characteristic Set. Hence, for each vehicle and service, a vehicle will result having higher reputation than another (with respect to a set of messages) if and only if the Perception of a Characteristic Set for that set of messages of the former is higher than that of the latter. We proceed now with the formalisation of this model.
+
+To model the set of feedback that a given vehicle provides with respect to a given message related to a service and characteristic, we will have to collect all formulas holding following receiving a message:
 
 \begin{definition}[Feedback Set]
 The feedback set of vehicle $v_{j}$ for a message $\phi^{v_{i}}_{i,j}$, for all $v_{j}, v_{i} \in \mathcal{A}$ is the set of formulas $\psi^{v_{j}}_{i,k}$ such that they agree with $\phi^{v_{i}}_{i,j}$ for the service identifier $i$ and are obtained by a derivation construed by a $read$ rule followed by a $\rightarrow I$ rule, i.e.
@@ -516,10 +506,9 @@ FS^{v_{j}}(\phi^{v_{i}}_{i,j})=\{ \psi^{v_{j}}_{i,k}\mid \Gamma^{v_{j}}
 \vdash_{\mathtt{s}}  Read(\phi^{v_{i}}_{i,j})\rightarrow \psi^{v_{j}}_{i,k}  \}
 \]
 \end{definition}
+By way of example, consider the simple derivation from Figure \ref{fig:ask}, which induces $FS^{v_{k}}(m^{v_{i,j}}_{2,1})=\{m^{v_{k}}_{2,2}\}$.
 
-By way of example, consider the following simple derivation, which induces $FS^{v_{k}}(m^{v_{i,j}}_{2,1})=\{m^{v_{k}}_{2,2}\}$: 
-
-\begin{figure*}
+\begin{figure*}[h]
 \begin{footnotesize}
 
 	\begin{prooftree}
@@ -640,6 +629,13 @@ Savas Konur and Michael Fisher.
 \newblock In {\em {Proceedings of the 73rd {IEEE} Vehicular Technology
   Conference, {VTC} Spring 2011, 15-18 May 2011, Budapest, Hungary}}, pages
   1--5. {IEEE}, 2011.
+  
+  
+  
+ \bibitem{6849111}
+Ku, I., Lu, Y., Gerla, M., Gomes,  R. L., Ongaro, F. and Cerqueira, E. 
+\newblock {Towards software-defined VANET: Architecture and services}.
+\newblock In \textit{2014 13th Annual Mediterranean Ad Hoc Networking Workshop (MED-HOC-NET)}, pp. 103-110,  2014.
 
 \bibitem{Lo2009}
 Nai-Wei Lo and Hsiao-Chien Tsai.
