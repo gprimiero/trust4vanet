@@ -88,7 +88,7 @@ The present paper addresses both problems mentioned above. In Section \ref{sec:l
 
 \section{\texttt{(un)SecureND}}\label{sec:logic}
 
-Recall that $\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust and distrust protocols introduced in \cite{primiero_secureND} and extended in \cite{DBLP:conf/ifiptm/Primiero16} with a negation connective. Here we provide a slightly modified version, adapted for a VANET network. In particular, in the present version we introduce: contexts as sets of sets; formulas with multiple indices to account for service and message numbers; ranking on service characteristics. We start with introducing the language of our logic:
+Recall that $\mathtt{(un)SecureND}$ is a natural deduction calculus defining trust, mistrust and distrust protocols introduced in \cite{primiero_secureND} and extended in \cite{DBLP:conf/ifiptm/Primiero16} with a negation connective. Here we provide a slightly modified version, adapted for a VANET network. In particular, in the present version we introduce: \emph{contexts} as sets of sets; \emph{formulas} with multiple indices to account for service and message numbers; \emph{ranking} on service characteristics. We start with introducing the language of the logic:
 
 \begin{definition}[Syntax of $\mathtt{(un)SecureND}$]\label{def:syntax} %The syntax  is defined by the following alphabet:
 	%
@@ -111,7 +111,7 @@ Recall that $\mathtt{(un)SecureND}$ is a natural deduction calculus defining tru
 	\end{displaymath}
 \end{definition}
 %
-
+%
 %\subsection{Services, Messaging and Protocols}
 $\mathcal{A}$ is the set of agents issuing messages containing vehicles $\mathcal{V}$ and roadside units (RSUs) $\mathcal{R}$. Below we will focus in particular on V2V communication, without loss of generality. The order $\prec$ between agents is a reputation order, defined below in Section \ref{sec:reputation}. $\mathcal{S}$ denotes a set of services. $\mathcal{C}$ denotes a set of service characteristics, with each element $C^{S_i}_{\overrightarrow{n}}$ denoting the set of $n$ characteristics of service $S_{i}$. We assume, here and throughout, that characteristics $C^{S_i}_{\overrightarrow{n}}$ of services for each service $S_i$ are associated with an order $\leq$, so are given as \emph{posets}, and the ordering $\leq$ is used to order messages below in Definition \ref{def:dependencypackages}. Note that for two characteristics $C^{S_i}_{\overrightarrow{n}}$ and $C^{S_j}_{\overrightarrow{n}}$ respectively with $i\neq j$, there is no order between  them.
 
