@@ -1,0 +1,563 @@
+\documentclass{beamer}
+
+\usepackage{amssymb}  % for the mathematical stuff
+\usepackage{amsmath}  % for the mathematical stuff
+
+\usepackage{xcolor}    % for colours
+\usepackage{graphicx} % for including graphics
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{bussproofs}
+\usetikzlibrary{arrows,automata}
+%\usepackage{natbib}
+
+%\usepackage{apalike}
+
+%\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings}
+
+%\lstset{language=Lisp,basicstyle=\ttfamily}
+
+\lstset{ %
+  %backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  %basicstyle=\normalfont\ttfamily,        % the size of the fonts that are used for the code
+  %basicstyle=\normalfont\footnotesize\ttfamily,        % the size of the fonts that are used for the code
+  aboveskip={-.4cm},
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  %breaklines=true,                 % sets automatic line breaking
+  %captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{Plum},    % comment style
+  morecomment=[l]{--},
+  deletekeywords={exp,eq,values,return,room},            % if you want to delete keywords from the given language
+  escapeinside={(*}{*)},          % if you want to add LaTeX within your code
+  %extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  %frame=single,                    % adds a frame around the code
+  %keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  %language=Octave,                 % the language of the code
+  morekeywords={define,let,cond,if,struct},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  %numbersep=5pt,                   % how far the line-numbers are from the code
+  %numberstyle=\tiny\color{Gray}, % the style that is used for the line-numbers
+  %rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  %stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{OliveGreen},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  basicstyle=\ttfamily,columns=flexible,
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newtheorem{thesis}{Thesis}
+\newtheorem{proposition}{Proposition}
+
+
+\mode<presentation> {
+  \usetheme[right]{Boadilla} % Without index, with footer
+ \usecolortheme{beaver}}
+
+
+\title[]{A Proof-theoretic Trust and Reputation Model for VANET}
+\author[]{Giuseppe Primiero, Franco Raimondi, Taolue Chen and Rajagopal Nagarajan}
+\date[29/04/2017]{parigi}
+\institute[Middlesex University]{
+Department of Computer Science\\
+Middlesex University, London\\
+\url{www.cs.mdx.ac.uk/people/giuseppe-primiero/}\\
+\bigskip
+\includegraphics[scale=0.2]{mdx.png}}
+
+\begin{document}
+
+
+\maketitle
+
+
+
+
+\begin{frame}
+	\label{error0}
+	\frametitle{Vehicular Ad Hoc Networks (VANETs) }
+	\smallskip
+
+\begin{itemize}
+  \item vehicles and roadside unit networks created to enhance transportation systems
+  \item  vehicle-to-vehicle (V2V) and vehicle-to-infrastructure (V2I) communications
+  \item services include:
+\begin{itemize}
+  \item vehicle and road safety services
+  \item traffic efficiency and management services
+  \item information and entertainment services.
+  \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+	\label{error1}
+	\frametitle{Trust}
+	\smallskip
+
+Trust to ensure integrity, reliability and safety of services.
+
+\begin{itemize}
+\item  entity-centric trust \cite{5641621, GomezMarmol:2012:TTR:2160992.2161100}
+\item  data-centric \cite{conf/infocom/RayaPGH08, Lo2009}
+\item combined \cite{Wei2012}.
+\item overview of trust in fixed and mobile ad hoc networks \cite{DBLP:conf/vtc/WexBHLD08},
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\label{rep}
+	\frametitle{Reputation}
+	\smallskip
+
+\begin{itemize}
+\item \cite{glenford}: offers an analysis as a characteristic of message forwarding among vehicles, drivers and other agents:
+\item other approaches in \cite{DBLP:conf/um/FinnsonZTMC12, DBLP:journals/ijaisc/ChaurasiaTV15}.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\label{error2}
+	\frametitle{Current Apporaches to Verification}
+	\smallskip
+
+\begin{itemize}
+\item simulations cannot guarantee the absence of unpredictable and unsafe behaviours
+\item exhaustive safety control is through formal verification
+\item Formal approaches to VANET include
+\begin{itemize}
+\item \cite{DBLP:conf/vtc/KonurF11} for verification of a congestion control protocol using PRISM
+\item verification of privacy and authentication using the AVISPA tool in~\cite{bouassida2011authentication};
+\item verification of the TESLA authentication protocol~\cite{tesla-cpn} using Petri nets.
+\end{itemize}
+\item theorem proving ignored so far
+\end{itemize}
+%
+\end{frame}
+
+\begin{frame}
+	\label{error2.1}
+	\frametitle{Objectives}
+	\smallskip
+\begin{enumerate}
+\item proof-theoretic translation of the trust and reputation model for VANET given in \cite{glenford}
+%\item extension of the natural deduction calculus \texttt{(un)SecureND} from \cite{DBLP:conf/ifiptm/Primiero16}.
+%\item show that trust properties in our calculus faithfully reflect those in a VANET network;
+\item identify non-trustworthy relations through a proof-checking method
+\item calculus formally correct through translation to a Coq library.
+\item transitive message passing operations are guaranteed safe
+\item protocols for handshaking, recipient selection and message passing based on reputation
+\end{enumerate}
+
+\end{frame}
+
+
+
+\begin{frame}
+	\label{error3}
+	\frametitle{The Language}
+	\smallskip
+
+  \begin{definition}[Syntax of $\mathtt{(un)SecureND}$]\label{def:syntax} %The syntax  is defined by the following alphabet:
+  	%
+  	\begin{displaymath}
+  	\begin{array}{l}
+  	\mathcal{A}^{\prec}:= \{\mathcal{V, R}\}\\
+  	\mathcal{V}:= \{v_{1}\prec \cdots \prec v_{n}\}\\
+  	\mathcal{R}:= \{rsu_{1}\prec\cdots \prec rsu_{m}\}\\
+  	\mathcal{S}:= \{S_1, \dots, S_{n}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
+  	\mathcal{C}:= \{C^{S_1}_{\overrightarrow{n}},  \dots, C^{S_{n}}_{\overrightarrow{n}}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
+  	\phi^{\mathcal{A}}_{C^{S_{i}}_{j}}:= a^{\mathcal{A}}_{C^{S_{i}}_{j}}\mid \neg \phi^{\mathcal{A}}_{i,j}\mid \phi^{\mathcal{A}}_{i,j}\rightarrow \phi^{\mathcal{A}}_{k,l}\mid \phi^{\mathcal{A}}_{i,j}\wedge \phi^{\mathcal{A}}_{k,l}\\
+  	\qquad \qquad \mid \phi^{\mathcal{A}}_{i,j}\vee \phi^{\mathcal{A}}_{k,l} \mid \bot \mid Read(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid\\
+  	\qquad \qquad Write(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid Trust(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\\
+  	\Gamma^{\mathcal{A}}:=
+  	%\{\{\phi^{\mathcal{A}}_{i,j}, \dots, \phi^{\mathcal{A}}_{i,k}\}, \dots, \{\phi^{\mathcal{A}}_{j,l}, \dots, \phi^{\mathcal{A}}_{j,m}\}\}
+  	\phi^{\mathcal{A}}_{i,j} \mid \phi^{\mathcal{A}}_{i,j} < \phi^{\mathcal{A}}_{k,l} \mid \Gamma^{\mathcal{A}}; \phi^{\mathcal{A}}_{i,j}
+  	%\{ \phi^{S}_{i}< \dots < \phi^{S}_{n}\}. %\Gamma^{**}:=\{\psi^{**}_{1}, \dots, \psi^{**}_{n}\}\\
+
+  	\end{array}
+  	\end{displaymath}
+  \end{definition}
+\end{frame}
+
+
+\begin{frame}
+	\label{error5}
+	\frametitle{Examples}
+	\smallskip
+
+%A profile for vehicle $v_{i}$, denoted as $\Gamma^{v_{i}}$ is the current list of all messages collected by $v_{i}$ from available sensors, other agents and networks. For the present purposes, information from networks will be indexed at their first receiving vehicle, so as not to add networks as separate agents.
+
+\begin{quote}
+A vehicle profile $\Gamma^{v_{i}}$ receives a message $\phi_{j,k}$ about service $S_{j}=\mathtt{weather}$ and characteristic $C_{k}=\mathtt{temperature}$ stating $\phi= (temp \geq 5^\circ C)$.
+\end{quote}
+
+%Therefore the order relation $\leq$ between service characteristics induces validity under profile: if a characteristic $k$ is essential to another characteristic $l$ with respect to a service $i$ for a vehicle $v_{j}$, then $v_j$ will be required to obtain a value for  $k$ in order to validly access a value for $l$. An example of such order between characteristics could be as follows:
+\begin{quote}
+ under the service $\mathtt{weather}$, $C_{k}=\mathtt{humidity}$ and $C_{l}=\mathtt{precipitation-forecast}$, where the former characteristic is essential to determine the latter.
+\end{quote}
+\end{frame}
+
+
+\begin{frame}
+	\label{error5.1}
+	\frametitle{Judgement}
+	\smallskip
+
+
+  \begin{definition}[Judgements]
+  A judgement $\Gamma^{v_l} \vdash_{\mathtt{s}} \phi^{v_{j}}_{i,k}$ states that a message $\phi$ about service $i$ and characteristic $k$ signed from agent $v_{j}$  is validly accessed at step $\mathtt{s}\geq 0$ under the profile of agent $v_{l}$.
+  \end{definition}
+
+\end{frame}
+
+
+\begin{frame}
+	\label{error10}
+	\frametitle{Access Rules}
+	\smallskip
+
+  \begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}}\vdash_{\mathtt{s}}  \neg \mathcal{O}(\psi^{v_{j}}_{i,l})$}
+		\RightLabel{$\mathcal{O}\in\{Read, Trust, Write\}, \neg$-distribution}
+		\UnaryInfC{$\Gamma^{v_{i}}\vdash_{\mathtt{s+1}}  \mathcal{O}(\neg \psi^{v_{j}}_{i,l})$}
+\end{prooftree}
+
+
+\begin{prooftree}
+		\AxiomC{}
+		\RightLabel{$\mathit{read}$}
+		\UnaryInfC{$\Gamma^{v_{i}}  \vdash_{\mathtt{s}}  Read(\psi^{v_{j}}_{i,l})$}
+		\end{prooftree}
+
+       \begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}}  \vdash_{\mathtt{s}}  Read(\psi^{v_{j}}_{i,l})$}
+		\AxiomC{$\Gamma^{v_{i}};\psi^{v_{j}}_{i,l} : profile$}
+		\RightLabel{$\mathit{trust}$}
+		\BinaryInfC{$\Gamma^{v_{i}} \vdash_{\mathtt{s+1}}   Trust(\psi^{v_{j}}_{i,l} ) $}
+	\end{prooftree}
+
+	\begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}}  \vdash_{\mathtt{s}}  Read(\psi^{v_{j}}_{i,l})$}
+		\AxiomC{$\Gamma^{v_{i}} \vdash_{\mathtt{s'}}   Trust(\psi^{v_{j}}_{i,l} ) $}
+		\RightLabel{$\mathit{write}$}
+		\BinaryInfC{$\Gamma^{v_{i}} \vdash_{\mathtt{s'+1}}   Write(\psi^{v_{j}}_{i,l} ) $}
+    \end{prooftree}
+
+		%\DisplayProof
+		%\qquad
+    \begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}} \vdash_{\mathtt{s}}   Write(\psi^{v_{j}}_{i,l} ) $}
+		\RightLabel{$\mathit{exec}$}
+		\UnaryInfC{$\Gamma^{v_{i}} \vdash_{\mathtt{s+1}}   \psi^{v_{j}}_{i,l}  $}
+	\end{prooftree}
+
+\end{frame}
+
+
+
+
+
+\begin{frame}
+	\label{error11}
+	\frametitle{Checking for inconsistent messages}
+	\smallskip
+
+
+  \begin{prooftree}
+    \AxiomC{$\Gamma^{v_{i}} \vdash_{\mathtt{s}}   Read(\psi^{v_{j}}_{i,l})\rightarrow \bot $}
+    \AxiomC{$\Gamma^{v_{i}}\setminus \{\neg\psi^{v_{i}}_{i,l}\} : profile$}
+  %		%\vdash_{\mathtt{s}}   wf, $\forall \phi^{A}_{j}\vdash_{\mathtt{s}}  Read(\psi^{B}_{i})\rightarrow \bot $}
+    \RightLabel{MTrust-I}
+    \BinaryInfC{$\Gamma^{v_{i}}\setminus \{\neg\psi^{v_{i}}_{i,l}\} \vdash_{\mathtt{s+1}}   \neg Trust(\neg \psi^{v_{i}}_{i,l})$}
+  \end{prooftree}
+  %
+\end{frame}
+
+
+\begin{frame}
+	\label{conclusion0}
+	\frametitle{Accepting new (inconsistent) information}
+	\smallskip
+
+
+  \begin{prooftree}
+		\AxiomC{$\Gamma^{v_{i}}\setminus \{\neg\psi^{v_{i}}_{i,l}\} \vdash_{\mathtt{s}}   \neg Trust(\neg \psi^{v_{i}}_{i,l})$}
+		\AxiomC{$\Gamma^{v_{k}}; \psi^{v_{j}}_{i,j} : profile$}
+		\RightLabel{MTrust-E, $\forall v_{k}\prec v_{j}$}
+		\BinaryInfC{$\Gamma^{v_{i}}\setminus \{\neg\psi^{v_{i}}_{i,l}\};\Gamma^{v_{k}}\vdash_{\mathtt{s+1}}  Trust(\psi^{v_{j}}_{i,l})$}
+	\end{prooftree}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\label{conclusion1}
+	\frametitle{Opportunistic Forwarding}
+	\smallskip
+
+  \lstset{language=Java,
+  %	numbers=left,
+    basicstyle=\scriptsize,
+    mathescape}
+  	\begin{lstlisting}[frame=single]  % Start your code-block
+
+  PROCEDURE $\mathtt{Opportunistic Forwarding}(v_{i},v_{j})$
+
+  	IF $v_{i}$  $Write(HELLO)$
+  	    THEN forall $[v_{k} \in \mathcal{A}\mid v_{k}$ $Write(HELLO)]$,
+  					SELECT $min(v_{k}, \prec)$
+  					DO Handshaking$(v_{i},v_{k})$
+  	ENDIF
+
+  	IF Handshaking($v_{i},v_{k}$)
+  		THEN $v_{i}$ $Write(\phi_{i,k})$ AND $v_{k}$ $Read(\phi_{i,k})$
+  					IF $v_{k}$ $Trust(\phi_{i,k})$
+  					THEN $v_{k}$ $Write(\phi_{i,k})$
+  					ELSE  $v_{k}$  $\neg Trust (\phi_{i,k})$
+  					ENDIFELSE
+  					IF forall $v_{i}\prec v_{k}$, $v_{i}$ $Trust(\phi_{i,k})$
+  						THEN $v_{k}$ $Trust(\phi_{i,k})$
+  					ELSE $v_{k}$ $\neg Trust(\phi_{i,k})$
+  					ENDIFELSE
+  	ENDIF
+
+  ENDPROCEDURE
+  	\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}
+\label{feedback}
+\frametitle{Reacting to messages}
+\smallskip
+
+\begin{definition}[Feedback Set]
+The feedback set of vehicle $v_{j}$ for a message $\phi^{v_{i}}_{i,j}$, for all $v_{j}, v_{i} \in \mathcal{A}$ is the set of formulas $\psi^{v_{j}}_{i,k}$ such that they agree with $\phi^{v_{i}}_{i,j}$ for the service identifier $i$ and are obtained by a derivation construed by a $read$ rule followed by a $\rightarrow I$ rule, i.e.
+%
+\[
+FS^{v_{j}}(\phi^{v_{i}}_{i,j})=\{ \psi^{v_{j}}_{i,k}\mid \Gamma^{v_{j}}
+\vdash_{\mathtt{s}}  Read(\phi^{v_{i}}_{i,j})\rightarrow \psi^{v_{j}}_{i,k}  \}
+\]
+\end{definition}
+
+\end{frame}
+
+
+
+\begin{frame}
+\label{perception}
+\frametitle{Assessing messages' value based on time}
+\smallskip
+
+\begin{definition}[Vehicle's Perception]
+The perception of vehicle $v_{j}$ for a message $\phi^{v_{i}}_{i,j}$, for all $v_{j}, v_{i} \in \mathcal{A}$ is the sum of elements of the feedback set over that formula, weighted by the step of the derivation at which it is obtained:
+
+\[
+AP^{v_{j}}(\phi^{v_{i}}_{i,j})=\sum_{FS^{v_{i}}(\phi^{v_{j}}_{i,k})}(\mathtt{s}(\psi^{v_{j}}_{i,k} \in FS^{v_{i}}(\phi^{v_{j}}_{i,k})))
+%\mid \Gamma^{v_{j}}
+%\vdash_{\mathtt{s}}  Read(\phi^{v_{i}}_{i,j})\rightarrow \psi^{v_{j}}_{i,k}  \}
+\]
+
+\end{definition}
+
+\end{frame}
+
+
+\begin{frame}
+\label{perception2}
+\frametitle{Assessing messages' set value based on time and ranking}
+\smallskip
+
+\begin{definition}[Vehicle's Perception of Characteristic Set]
+The perception of vehicle $v_{j}$ for a set of messages $\mathcal{M}^{\mathcal{A}}_{S_{i},C_{k}}$ from other vehicles about characteristic $C_{k}$ of service $S_{i}$ is the sum of elements of the feedback set over the messages received about that service characteristic, weighted by the steps of the derivation at which it is obtained and further by the value $\mathtt{r}(C_{k})$ of the rank of characteristic $k$:
+%
+\begin{displaymath}
+\begin{array}{l}
+AP^{v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})=\\
+\sum_{FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k})}
+(1-\mathtt{r}(C_{k})(\mathtt{s}(\psi^{v_{j}}_{i,k} \in FS^{v_{i}}(\phi^{v_{j}}_{i,k}\dots \phi^{v_{n}}_{i,k}))))
+\end{array}
+\end{displaymath}
+\end{definition}
+
+where $\mathtt{r}$ is a ranking of characteristics valid for each vehicle $v_{i}$.
+\end{frame}
+
+
+
+\begin{frame}
+\label{reputation}
+\frametitle{Vehicles' reputation based on the value of their messages}
+\smallskip
+
+\begin{definition}[Reputation]
+$\forall v_{i}, v_{j}\in \mathcal{V}, S_{i}\in \mathcal{S}, v_{i}\prec v_{j} \leftrightarrow AP^{v_{i}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})>AP^{v_{j}}(\mathcal{M}^{\mathcal{A}}_{S_{i}, C_{k}})$.
+\end{definition}
+
+\end{frame}
+
+
+\begin{frame}
+\label{conclusions}
+\frametitle{Conclusions}
+\smallskip
+
+\begin{itemize}
+\item a proof-theory for trust and reputation in VANETs
+\item logic \texttt{(un)SecureND}, including an explicit $trust$ function on formulas to guarantee consistency check at each retrieval step (after a $read$ function), before forwarding is granted for a package (by a $write$ function).
+\item Opportunistic Forwarding selects receivers on the basis of their reputation ranking
+\item Trust on forwarding guarantees correctness on transitive transmissions
+\item resolution protocol for restoring information after removing previously stored data.
+\item Protocol Validation via as a large inductive type in the Coq proof assistant \url{https://github.com/gprimiero/SecureNDC}.
+
+\item Future Work:
+\begin{itemize}
+\item majority selection on opportunistic forwarding (instead of consensus)
+\item separate ordering for vehicles and RSUs.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]
+\label{biblio}
+\frametitle{Refrences}
+\smallskip
+
+
+\bibliographystyle{apalike}
+\begin{thebibliography}{10}
+%\vspace{-2mm}
+\bibitem{bouassida2011authentication}
+Mohamed~Salah Bouassida.
+\newblock Authentication vs. privacy within vehicular ad hoc networks.
+\newblock {\em International Journal of Network Security}, 13(3):121--134,
+  2011.
+
+\bibitem{DBLP:journals/ijaisc/ChaurasiaTV15}
+Brijesh~Kumar Chaurasia, Ranjeet~Singh Tomar, and Shekhar Verma.
+\newblock {Using trust for lightweight communication in VANETs}.
+\newblock {\em {IJAISC}}, 5(2):105--116, 2015.
+
+\bibitem{DBLP:conf/um/FinnsonZTMC12}
+John Finnson, Jie Zhang, Thomas~T. Tran, Umar~Farooq Minhas, and Robin Cohen.
+\newblock {A Framework for Modeling Trustworthiness of Users in Mobile
+  Vehicular Ad-Hoc Networks and Its Validation through Simulated Traffic Flow}.
+\newblock In {\em {User Modeling, Adaptation, and Personalization - 20th
+  International Conference, {UMAP} 2012.
+  Proceedings}}, volume 7379 of {\em {Lecture Notes in Computer Science}},
+  pages 76--87. Springer, 2012.
+
+\bibitem{GomezMarmol:2012:TTR:2160992.2161100}
+F{\'e}lix {G{\'o}mez M{\'a}rmol} and Gregorio {Mart{\'i}nez P{\'e}rez}.
+\newblock {TRIP, a Trust and Reputation Infrastructure-based Proposal for
+  Vehicular Ad Hoc Networks}.
+\newblock {\em J. Netw. Comput. Appl.}, 35(3):934--941, May 2012.
+
+\bibitem{tesla-cpn}
+M.~H. Jahanian, F.~Amin, and A.~H. Jahangir.
+\newblock Analysis of tesla protocol in vehicular ad hoc networks using timed
+  colored petri nets.
+\newblock In {\em 2015 6th International Conference on Information and
+  Communication Systems (ICICS)}, pages 222--227, April 2015.
+
+\bibitem{DBLP:conf/vtc/KonurF11}
+Savas Konur and Michael Fisher.
+\newblock {Formal Analysis of a {VANET} Congestion Control Protocol through
+  Probabilistic Verification}.
+\newblock In {\em {Proceedings of the 73rd {IEEE} Vehicular Technology
+  Conference, {VTC} Spring 2011, 15-18 May 2011, Budapest, Hungary}}, pages
+  1--5. {IEEE}, 2011.
+
+
+
+ \bibitem{6849111}
+Ku, I., Lu, Y., Gerla, M., Gomes,  R. L., Ongaro, F. and Cerqueira, E.
+\newblock {Towards software-defined VANET: Architecture and services}.
+\newblock In \textit{2014 13th Annual Mediterranean Ad Hoc Networking Workshop (MED-HOC-NET)}, pp. 103-110,  2014.
+
+\bibitem{Lo2009}
+Nai-Wei Lo and Hsiao-Chien Tsai.
+\newblock {A Reputation System for Traffic Safety Event on Vehicular Ad Hoc
+  Networks}.
+\newblock {\em EURASIP Journal on Wireless Communications and Networking},
+  2009(1):125348, 2009.
+
+\bibitem{5641621}
+U.~F. Minhas, J.~Zhang, T.~Tran, and R.~Cohen.
+\newblock {A Multifaceted Approach to Modeling Agent Trust for Effective
+  Communication in the Application of Mobile Ad Hoc Vehicular Networks}.
+\newblock {\em IEEE Transactions on Systems, Man, and Cybernetics, Part C
+  (Applications and Reviews)}, 41(3):407--420, May 2011.
+
+\bibitem{DBLP:conf/ifiptm/Primiero16}
+Giuseppe Primiero.
+\newblock {A Calculus for Distrust and Mistrust}.
+\newblock In {\em {Trust Management {X} - 10th {IFIP} {WG}
+  11.11 International Conference, {IFIPTM}, Proceedings}}, volume 473 of {\em {{IFIP} Advances in
+  Information and Communication Technology}}, pages 183--190. Springer, 2016.
+
+\bibitem{primiero_secureND}
+Giuseppe Primiero and Franco Raimondi.
+\newblock {A typed natural deduction calculus to reason about secure trust}.
+\newblock In Ali Miri, Urs Hengartner, Nen{-}Fu Huang, Audun J{\o}sang, and
+  Joaqu{\'i}n Garc{\'i}a{-}Alfaro, editors, {\em {2014 Twelfth Annual
+  International Conference on Privacy, Security and Trust}}, pages 379--382. {IEEE}, 2014.
+
+\bibitem{conf/infocom/RayaPGH08}
+Maxim Raya, Panagiotis Papadimitratos, Virgil~D. Gligor, and Jean-Pierre
+  Hubaux.
+\newblock {On Data-Centric Trust Establishment in Ephemeral Ad Hoc Networks.}
+\newblock In {\em {INFOCOM}}, pages 1238--1246. IEEE, 2008.
+
+\bibitem{restall}
+Greg Restall.
+\newblock {\em {An Introduction to Substructural Logics}}.
+\newblock Routledge, 2000.
+
+\bibitem{Soleymani2015}
+Seyed~Ahmad Soleymani, Abdul~Hanan Abdullah, Wan~Haslina Hassan,
+  Mohammad~Hossein Anisi, Shidrokh Goudarzi, Mir~Ali {Rezazadeh Baee}, and
+  Satria Mandala.
+\newblock {Trust management in vehicular ad hoc network: a systematic review}.
+\newblock {\em EURASIP Journal on Wireless Communications and Networking},
+  2015(1):146, 2015.
+
+\bibitem{glenford}
+R~Vanni, L.M.S. Jaimes, G.~Mapp, and E.~Moreira.
+\newblock {Ontology Driven Reputation Model for VANET}.
+\newblock In {\em {AICT 2016, The Twelfth Advanced International Conference on
+  Telecommunications }}, pages 14--19. IARIA, 2016.
+
+\bibitem{Wei2012}
+Yu-Chih Wei and Yi-Ming Chen.
+\newblock {\em {Reliability and Efficiency Improvement for Trust Management
+  Model in VANETs}}, pages 105--112.
+\newblock Springer Netherlands, Dordrecht, 2012.
+
+\bibitem{DBLP:conf/vtc/WexBHLD08}
+Philipp Wex, Jochen Breuer, Albert Held, Tim Leinm{\"u}ller, and Luca
+  Delgrossi.
+\newblock {Trust Issues for Vehicular Ad Hoc Networks}.
+\newblock In {\em {Proceedings of the 67th {IEEE} Vehicular Technology
+  Conference, {VTC} Spring 2008, 11-14 May 2008, Singapore}}, pages 2800--2804.
+  {IEEE}, 2008.
+
+\end{thebibliography}
+
+\end{frame}
+
+
+
+\end{document}

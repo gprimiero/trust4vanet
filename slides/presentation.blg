@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: presentation.aux
+The style file: apalike.bst
+I found no \bibdata command---while reading file presentation.aux
+Warning--I didn't find a database entry for "5641621"
+Warning--I didn't find a database entry for "GomezMarmol:2012:TTR:2160992.2161100"
+Warning--I didn't find a database entry for "conf/infocom/RayaPGH08"
+Warning--I didn't find a database entry for "Lo2009"
+Warning--I didn't find a database entry for "Wei2012"
+Warning--I didn't find a database entry for "DBLP:conf/vtc/WexBHLD08"
+Warning--I didn't find a database entry for "glenford"
+Warning--I didn't find a database entry for "DBLP:conf/um/FinnsonZTMC12"
+Warning--I didn't find a database entry for "DBLP:journals/ijaisc/ChaurasiaTV15"
+Warning--I didn't find a database entry for "DBLP:conf/vtc/KonurF11"
+Warning--I didn't find a database entry for "bouassida2011authentication"
+Warning--I didn't find a database entry for "tesla-cpn"
+You've used 0 entries,
+            1935 wiz_defined-function locations,
+            490 strings with 4079 characters,
+and the built_in function-call counts, 17 in all, are:
+= -- 0
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 0
+:= -- 7
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 1
+format.name$ -- 0
+if$ -- 1
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 3
+num.names$ -- 0
+pop$ -- 0
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 1
+stack$ -- 0
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 0
+width$ -- 0
+write$ -- 2
+(There was 1 error message)

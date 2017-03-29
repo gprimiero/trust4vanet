@@ -1,0 +1,32 @@
+\label{conclusion1}
+	\frametitle{Opportunistic Forwarding}
+	\smallskip
+
+  \lstset{language=Java,
+  %	numbers=left,
+    basicstyle=\scriptsize,
+    mathescape}
+  	\begin{lstlisting}[frame=single]  % Start your code-block
+
+  PROCEDURE $\mathtt{Opportunistic Forwarding}(v_{i},v_{j})$
+
+  	IF $v_{i}$  $Write(HELLO)$
+  	    THEN forall $[v_{k} \in \mathcal{A}\mid v_{k}$ $Write(HELLO)]$,
+  					SELECT $min(v_{k}, \prec)$
+  					DO Handshaking$(v_{i},v_{k})$
+  	ENDIF
+
+  	IF Handshaking($v_{i},v_{k}$)
+  		THEN $v_{i}$ $Write(\phi_{i,k})$ AND $v_{k}$ $Read(\phi_{i,k})$
+  					IF $v_{k}$ $Trust(\phi_{i,k})$
+  					THEN $v_{k}$ $Write(\phi_{i,k})$
+  					ELSE  $v_{k}$  $\neg Trust (\phi_{i,k})$
+  					ENDIFELSE
+  					IF forall $v_{i}\prec v_{k}$, $v_{i}$ $Trust(\phi_{i,k})$
+  						THEN $v_{k}$ $Trust(\phi_{i,k})$
+  					ELSE $v_{k}$ $\neg Trust(\phi_{i,k})$
+  					ENDIFELSE
+  	ENDIF
+
+  ENDPROCEDURE
+  	\end{lstlisting}
