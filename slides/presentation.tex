@@ -171,17 +171,22 @@ Trust to ensure integrity, reliability and safety of services.
   	%
   	\begin{displaymath}
   	\begin{array}{l}
-  	\mathcal{A}^{\prec}:= \{\mathcal{V, R}\}\\
-  	\mathcal{V}:= \{v_{1}\prec \cdots \prec v_{n}\}\\
-  	\mathcal{R}:= \{rsu_{1}\prec\cdots \prec rsu_{m}\}\\
-  	\mathcal{S}:= \{S_1, \dots, S_{n}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
-  	\mathcal{C}:= \{C^{S_1}_{\overrightarrow{n}},  \dots, C^{S_{n}}_{\overrightarrow{n}}\}\\  %\sim\in \{<,\leq, =, \geq, >\}
-  	\phi^{\mathcal{A}}_{C^{S_{i}}_{j}}:= a^{\mathcal{A}}_{C^{S_{i}}_{j}}\mid \neg \phi^{\mathcal{A}}_{i,j}\mid \phi^{\mathcal{A}}_{i,j}\rightarrow \phi^{\mathcal{A}}_{k,l}\mid \phi^{\mathcal{A}}_{i,j}\wedge \phi^{\mathcal{A}}_{k,l}\\
-  	\qquad \qquad \mid \phi^{\mathcal{A}}_{i,j}\vee \phi^{\mathcal{A}}_{k,l} \mid \bot \mid Read(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid\\
-  	\qquad \qquad Write(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid Trust(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\\
-  	\Gamma^{\mathcal{A}}:=
+          \mathcal{A}^{\prec}:= \{\mathcal{V, R}\}\\
+          \mathcal{V}:= \{v_{1}\prec \cdots \prec v_{n}\} (\prec \textrm{is a
+            reputation order})\\
+          \mathcal{R}:= \{rsu_{1}\prec\cdots \prec rsu_{m}\}\\
+          \mathcal{S}:= \{S_1, \dots, S_{n}\} \textrm{(Services)}\\  %\sim\in \{<,\leq, =,
+                                %\geq, >\} 
+          \mathcal{C}:= \{C^{S_1}_{\overrightarrow{n}},  \dots,
+          C^{S_{n}}_{\overrightarrow{n}}\} \textrm{(Characteristics)}\\  %\sim\in \{<,\leq, =, \geq, >\}
+          \phi^{\mathcal{A}}_{C^{S_{i}}_{j}}:= a^{\mathcal{A}}_{C^{S_{i}}_{j}}\mid \neg \phi^{\mathcal{A}}_{i,j}\mid \phi^{\mathcal{A}}_{i,j}\rightarrow \phi^{\mathcal{A}}_{k,l}\mid \phi^{\mathcal{A}}_{i,j}\wedge \phi^{\mathcal{A}}_{k,l}\\
+          \qquad \qquad \mid \phi^{\mathcal{A}}_{i,j}\vee \phi^{\mathcal{A}}_{k,l} \mid \bot \mid Read(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid\\
+          \qquad \qquad Write(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\mid Trust(\phi^{\mathcal{A}}_{C^{S_{i}}_{j}})\\
+          \Gamma^{\mathcal{A}}:=
   	%\{\{\phi^{\mathcal{A}}_{i,j}, \dots, \phi^{\mathcal{A}}_{i,k}\}, \dots, \{\phi^{\mathcal{A}}_{j,l}, \dots, \phi^{\mathcal{A}}_{j,m}\}\}
-  	\phi^{\mathcal{A}}_{i,j} \mid \phi^{\mathcal{A}}_{i,j} < \phi^{\mathcal{A}}_{k,l} \mid \Gamma^{\mathcal{A}}; \phi^{\mathcal{A}}_{i,j}
+  	\phi^{\mathcal{A}}_{i,j} \mid \phi^{\mathcal{A}}_{i,j} <
+        \phi^{\mathcal{A}}_{k,l} \mid \Gamma^{\mathcal{A}};
+        \phi^{\mathcal{A}}_{i,j} \textrm{(Profile)}
   	%\{ \phi^{S}_{i}< \dots < \phi^{S}_{n}\}. %\Gamma^{**}:=\{\psi^{**}_{1}, \dots, \psi^{**}_{n}\}\\
 
   	\end{array}
@@ -201,7 +206,13 @@ Trust to ensure integrity, reliability and safety of services.
 A vehicle profile $\Gamma^{v_{i}}$ receives a message $\phi_{j,k}$ about service $S_{j}=\mathtt{weather}$ and characteristic $C_{k}=\mathtt{temperature}$ stating $\phi= (temp \geq 5^\circ C)$.
 \end{quote}
 
-%Therefore the order relation $\leq$ between service characteristics induces validity under profile: if a characteristic $k$ is essential to another characteristic $l$ with respect to a service $i$ for a vehicle $v_{j}$, then $v_j$ will be required to obtain a value for  $k$ in order to validly access a value for $l$. An example of such order between characteristics could be as follows:
+The order relation $\leq$ between service characteristics induces
+validity under profile: if a characteristic $k$ is essential to
+another characteristic $l$ with respect to a service $i$ for a vehicle
+$v_{j}$, then $v_j$ will be required to obtain a value for  $k$ in
+order to validly access a value for $l$. An example of such order
+between characteristics could be as follows:
+
 \begin{quote}
  under the service $\mathtt{weather}$, $C_{k}=\mathtt{humidity}$ and $C_{l}=\mathtt{precipitation-forecast}$, where the former characteristic is essential to determine the latter.
 \end{quote}
@@ -415,7 +426,7 @@ $\forall v_{i}, v_{j}\in \mathcal{V}, S_{i}\in \mathcal{S}, v_{i}\prec v_{j} \le
 
 \begin{itemize}
 \item a proof-theory for trust and reputation in VANETs
-\item logic \texttt{(un)SecureND}, including an explicit $trust$ function on formulas to guarantee consistency check at each retrieval step (after a $read$ function), before forwarding is granted for a package (by a $write$ function).
+\item logic \texttt{(un)SecureND}, including an explicit $trust$ function on formulas to guarantee consistency check at each retrieval step (after a $read$ function), before forwarding is granted for a message (by a $write$ function).
 \item Opportunistic Forwarding selects receivers on the basis of their reputation ranking
 \item Trust on forwarding guarantees correctness on transitive transmissions
 \item resolution protocol for restoring information after removing previously stored data.
